@@ -27,7 +27,7 @@ groupby_race <- police_killings |>
   group_by(raceethnicity) |>
   summarize(n = n()) |>
   ggplot(aes(x = raceethnicity, y = n)) +
-  geom_col(stat = "identity", fill = "steelblue") +
+  geom_col(fill = "steelblue") +
   labs(x = "Race/Ethnicity of Deceased",
        y = "Number of Occurences",
        title = "US Police Killings by Race, 2015",
@@ -46,8 +46,7 @@ groupby_countyincome <- police_killings |>
   labs(x = "County-Level Median Household Income",
        y = "Number of Occurences",
        title = "US Police Killings by County Income, 2015",
-       caption = "Data: The Guardian / FiveThirtyEight") +
-  scale_x_continuous()
+       caption = "Data: The Guardian / FiveThirtyEight") 
 groupby_countyincome
 ```
 ## Police Killings by Age
