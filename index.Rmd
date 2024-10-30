@@ -9,8 +9,66 @@ output:
 
 
 
-## Milestone 2
+## Milestone 3
 
 How do rates of police killings in the US vary with respect to the racial and socioeconomic composition of the areas in which they take place? In this study, I aim to analyze the relationship between rates of police killings and the racial composition, average personal and household income, unemployment rates, poverty rates, and average education levels in their respective cities/states. I hypothesize that higher rates of police killings take place in areas with lower white populations, higher Black and Hispanic/Latino populations, lower average personal and household income, higher average poverty and unemployment rates, and lower average education rates (measured by attainment of BA or a higher degree). Given historical divisions of American cities along lines of race and class (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black and Hispanic/Latino individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles in areas with certain racial and socioeconomic make-ups. My variables of interest are the city and state where the killing occurred, the racial profile of the deceased civilian, the share of the population in the respective region which is non-Hispanic white, black, and Hispanic/Latino, the tract-level median personal and household income, the tract-level poverty and unemployment rates, and the share of the population with a BA or higher degree. If I observe higher rates of police killings in areas with lower white populations, higher Black and Hispanic/Latino populations, lower average personal and household income, higher average poverty and unemployment rates, and lower average education rates, my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven. Data from Fivethirtyeight “Where Police Have Killed Americans In 2015” (Info).
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+police_killings <- read_csv("C:/Users/rwolf/OneDrive/Desktop/police_killings.csv")
+police_killings
+```
+
+## Police Killings by Race
+
+```{r}
+groupby_race <- police_killings |>
+  group_by(raceethnicity) |>
+  summarize(n = n()) |>
+  ggplot(aes(x = raceethnicity, y = n)) +
+  geom_col(stat = "identity", fill = "steelblue") +
+  labs(x = "Race/Ethnicity of Deceased",
+       y = "Number of Occurences",
+       title = "US Police Killings by Race, 2015",
+       caption = "Data: The Guardian / FiveThirtyEight")
+groupby_race
+```
+## Police Killings by Income of County in Which Killing Occured
+
+
+```{r}
+groupby_countyincome <- police_killings |>
+  group_by(county_income) |>
+  summarize(n = n()) |>
+  ggplot(aes(x = county_income)) +
+  geom_histogram(binwidth = 10000, fill = "darkgreen", color = "black") +
+  labs(x = "County-Level Median Household Income",
+       y = "Number of Occurences",
+       title = "US Police Killings by County Income, 2015",
+       caption = "Data: The Guardian / FiveThirtyEight") +
+  scale_x_continuous()
+groupby_countyincome
+```
+## Police Killings by Age
+
+
+```{r}
+police_killings$age <- as.numeric(as.character(police_killings$age))
+
+groupbyage <- police_killings |>
+  ggplot(aes(x = age)) +
+  geom_histogram(fill = "indianred4", color = "black") +
+  labs(x = "Age of Deceased",
+       y = "Number of Occurences",
+       title = "US Police Killings by Age, 2015",
+       caption = "Data: Data: The Guardian / FiveThirtyEight") 
+groupbyage 
+```
+
+
+
+
+
 
 

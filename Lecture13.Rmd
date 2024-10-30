@@ -1,0 +1,92 @@
+---
+title: "Lecture 13"
+author: "Reuben Berkowitz"
+date: "2024-10-16"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(qss)
+data(minwage)
+minwage <- as_tibble(minwage)
+minwage
+```
+
+Creating a treatment vector
+```{r}
+minwage |>
+  count(location)
+```
+
+```{r}
+minwage <- minwage |>
+  mutate(state = if_else(location == "PA", "PA", "NJ" ),
+         full_prop_after = fullAfter / (fullAfter + partAfter))
+minwage
+```
+
+### Cross sectional estimate
+
+```{r}
+ate_cs <- minwage |>
+  group_by(state) |>
+  summarize(full_mean = mean(full_prop_after)) |>
+  pivot_wider(names_from = state,
+              values_from = full_mean) |>
+  mutate(ATE = NJ - PA)
+ate_cs
+```
+
+### Confounders
+
+Balance of chains acros states
+
+```{r}
+minwage |>
+  group_by(state, chain) |>
+  summarize(n = n(), .groups = "drop_last") |>
+  mutate(prop = n / sum(n)) |>
+  pivot_wider(names_from = state,
+              values_from = prop,
+              id_cols = chain)
+  
+```
+
+
+ATE by chain
+```{r}
+minwage |>
+  group_by(state, chain) |>
+  summarize(full_mean = mean(full_prop_after)) |>
+  pivot_wider(names_from = state,
+              values_from = full_mean) |>
+  mutate(ATE = NJ - PA)
+```
+
+### Before and after design
+
+```{r}
+minwage <- minwage |>
+  mutate(full_prop_before = fullBefore / (fullBefore + partBefore))
+
+minwage |> 
+  filter(state == "NJ") |>
+  summarize(ATE = mean(full_prop_after) - mean(full_prop_before))
+```
+
+### Difference-in-difference
+
+```{r}
+minwage |>
+  group_by(state) |>
+  summarize(trend = mean(full_prop_after) - mean(full_prop_before)) |>
+  pivot_wider(names_from = state,
+              values_from = trend) |>
+  mutate(DID = NJ - PA)
+```
+
+
+
+
+
