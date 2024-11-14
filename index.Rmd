@@ -53,8 +53,8 @@ While Black Americans make up only approximately 13% of the US population, they 
 majorityblack <- police_killings |>
   mutate(majority_black = if_else(share_black > 50, "Majority Black", "Not Majority Black")) |>
   ggplot(aes(x = majority_black)) +
-  geom_bar(fill = "orange3") + 
-  labs(x = "County Demographics",
+  geom_bar(fill = "orange4") +
+  labs(x = "Tract Demographics",
        y = "Number of Occurences",
        title = "US Police Killings by Share of County Black Population, 2015",
        caption = "Data: The Guardian / FiveThirtyEight") +
@@ -62,9 +62,11 @@ majorityblack <- police_killings |>
 majorityblack
 ```
 
+
 While only 7% of Americans live in majority-Black tracts, nearly a quarter of police killings occurred in majority-Black tracts. Not only does the race of an individual track with the rate of police killings -- racial makeup of the area in which the killing occurs is clearly relevant.
 
 Next, let's add a socioeconomic component. A tract is classified as having a high poverty rate if at least 20% of the population lives below the poverty line (USDA ERS). Approximately 11-12% of tracts fit this classification (Census.gov). Let's see what happens when we observe the interaction of racial and socioeconomic demographics. 
+
 
 ```{r}
 raceandpoverty <- police_killings |>
@@ -84,6 +86,7 @@ raceandpoverty <- police_killings |>
     axis.text.x = element_text(angle = 45, hjust = 0.9))
 raceandpoverty
 ```
+
 Evidently, poverty levels play into this analysis as well. The majority of killings (303 out of 467, or ~64.8%) were located in tracts classified as having high poverty levels. Of those, 79 occurred in majority Black tracts (79 out of 303 = ~26%, and 79 out of 467 = ~16.9%). Again, given the fact ~7% of tracts are majority Black, and ~11-12% of tracts are classified as having high poverty levels, police killings take place at disproportionately high rates in areas with majority Black populations and higher poverty levels.
 
 
@@ -118,21 +121,6 @@ groupby_countyincome
 ```
 
 
-## Police Killings by Age
-
-```{r}
-police_killings$age <- as.numeric(as.character(police_killings$age))
-
-groupbyage <- police_killings |>
-  ggplot(aes(x = age)) +
-  geom_histogram(fill = "indianred4", color = "black") +
-  labs(x = "Age of Deceased",
-       y = "Number of Occurences",
-       title = "US Police Killings by Age, 2015",
-       caption = "Data: Data: The Guardian / FiveThirtyEight") +
-    theme_minimal()
-groupbyage
-```
 
 
 
