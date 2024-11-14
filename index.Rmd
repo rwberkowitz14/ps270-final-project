@@ -9,7 +9,7 @@ output:
 
 
 
-## Milestone 3
+## Milestone 4
 
 How do rates of police killings in the US vary with respect to the racial and socioeconomic composition of the areas in which they take place? In this study, I aim to analyze the relationship between rates of police killings and the racial composition, average personal and household income, unemployment rates, poverty rates, and average education levels in their respective cities/states. I hypothesize that higher rates of police killings take place in areas with lower white populations, higher Black and Hispanic/Latino populations, lower average personal and household income, higher average poverty and unemployment rates, and lower average education rates (measured by attainment of BA or a higher degree). Given historical divisions of American cities along lines of race and class (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black and Hispanic/Latino individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles in areas with certain racial and socioeconomic make-ups. My variables of interest are the city and state where the killing occurred, the racial profile of the deceased civilian, the share of the population in the respective region which is non-Hispanic white, black, and Hispanic/Latino, the tract-level median personal and household income, the tract-level poverty and unemployment rates, and the share of the population with a BA or higher degree. If I observe higher rates of police killings in areas with lower white populations, higher Black and Hispanic/Latino populations, lower average personal and household income, higher average poverty and unemployment rates, and lower average education rates, my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven. Data from Fivethirtyeight “Where Police Have Killed Americans In 2015” (Info).
 
@@ -31,11 +31,76 @@ groupby_race <- police_killings |>
   labs(x = "Race/Ethnicity of Deceased",
        y = "Number of Occurences",
        title = "US Police Killings by Race, 2015",
-       caption = "Data: The Guardian / FiveThirtyEight")
+       caption = "Data: The Guardian / FiveThirtyEight") +
+  theme_minimal()
 groupby_race
 ```
-## Police Killings by Income of County in Which Killing Occured
 
+```{r}
+police_killings |>
+  group_by(raceethnicity) |>
+  count() |>
+  rename(`Race/Ethnicity` = raceethnicity,
+         `Number of Occurences` = n) |>
+  knitr::kable()
+```
+
+While Black Americans make up only approximately 13% of the US population, they made up 135 out of the 467 deceased in this dataset, or approximately 28.9%. This fits with the hypothesis that American policing has historically targeted Black Americans at higher rates; still, this data by itself is not sufficient for a proper analysis of the relationship between race and police killings. In order to advance this analysis, let's look at incidences of police killings with respect to county racial demographics.
+
+## Police Killings by County Demographics
+
+```{r}
+majorityblack <- police_killings |>
+  mutate(majority_black = if_else(share_black > 50, "Majority Black", "Not Majority Black")) |>
+  ggplot(aes(x = majority_black)) +
+  geom_bar(fill = "orange3") + 
+  labs(x = "County Demographics",
+       y = "Number of Occurences",
+       title = "US Police Killings by Share of County Black Population, 2015",
+       caption = "Data: The Guardian / FiveThirtyEight") +
+  theme_minimal()
+majorityblack
+```
+While only 7% of Americans live in majority-Black tracts, nearly a quarter of police killings occurred in majority-Black tracts. Not only does the race of an individual track with the rate of police killings -- racial makeup of the area in which the killing occurs is clearly relevant.
+
+Next, let's add a socioeconomic component. A tract is classified as having a high poverty rate if at least 20% of the population lives below the poverty line (USDA ERS). Approximately 11-12% of tracts fit this classification (Census.gov). Let's see what happens when we observe the interaction of racial and socioeconomic demographics. 
+
+```{r}
+raceandpoverty <- police_killings |>
+  mutate(majority_black = if_else(share_black > 50, "Majority Black", "Not Majority Black"),
+         povertyrate = if_else(pov >= 20, "High Poverty", "Not High Poverty"),
+         interaction = interaction(majority_black, povertyrate)) |>
+  group_by(interaction) |>
+  count() |>
+  ggplot(aes(x = interaction, y = n, fill = interaction)) +
+  geom_bar(stat = "identity") +
+   labs(x = "Race and Poverty Demographics",
+       y = "Number of Occurences",
+       title = "US Police Killings by Race and Poverty, 2015",
+       caption = "Data: The Guardian / FiveThirtyEight") +
+    theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 0.9))
+raceandpoverty
+```
+Evidently, poverty levels play into this analysis as well. The majority of killings (303 out of 467, or ~64.8%) were located in tracts classified as having high poverty levels. Of those, 79 occurred in majority Black tracts (79 out of 303 = ~26%, and 79 out of 467 = ~16.9%). Again, given the fact ~7% of tracts are majority Black, and ~11-12% of tracts are classified as having high poverty levels, police killings take place at disproportionately high rates in areas with majority Black populations and higher poverty levels.
+
+
+```{r}
+police_killings |>
+  mutate(majority_black = if_else(share_black > 50, "Majority Black", "Not Majority Black"),
+         povertyrate = if_else(pov >= 20, "High Poverty", "Not High Poverty"),
+         interaction = interaction(majority_black, povertyrate)) |>
+  group_by(interaction) |>
+  count() |> 
+  rename(`Race and Poverty` = interaction,
+         `Number of Occurences` = n) |>
+  knitr::kable()
+```
+
+
+
+## Police Killings by Income of County in Which Killing Occured
 
 ```{r}
 groupby_countyincome <- police_killings |>
@@ -46,11 +111,14 @@ groupby_countyincome <- police_killings |>
   labs(x = "County-Level Median Household Income",
        y = "Number of Occurences",
        title = "US Police Killings by County Income, 2015",
-       caption = "Data: The Guardian / FiveThirtyEight") 
+       caption = "Data: The Guardian / FiveThirtyEight") +
+    theme_minimal()
+
 groupby_countyincome
 ```
-## Police Killings by Age
 
+
+## Police Killings by Age
 
 ```{r}
 police_killings$age <- as.numeric(as.character(police_killings$age))
@@ -61,13 +129,16 @@ groupbyage <- police_killings |>
   labs(x = "Age of Deceased",
        y = "Number of Occurences",
        title = "US Police Killings by Age, 2015",
-       caption = "Data: Data: The Guardian / FiveThirtyEight") 
-groupbyage 
+       caption = "Data: Data: The Guardian / FiveThirtyEight") +
+    theme_minimal()
+
+groupbyage
 ```
 
 
 
 
+  
 
 
 
