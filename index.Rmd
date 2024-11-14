@@ -61,6 +61,7 @@ majorityblack <- police_killings |>
   theme_minimal()
 majorityblack
 ```
+
 While only 7% of Americans live in majority-Black tracts, nearly a quarter of police killings occurred in majority-Black tracts. Not only does the race of an individual track with the rate of police killings -- racial makeup of the area in which the killing occurs is clearly relevant.
 
 Next, let's add a socioeconomic component. A tract is classified as having a high poverty rate if at least 20% of the population lives below the poverty line (USDA ERS). Approximately 11-12% of tracts fit this classification (Census.gov). Let's see what happens when we observe the interaction of racial and socioeconomic demographics. 
@@ -113,7 +114,6 @@ groupby_countyincome <- police_killings |>
        title = "US Police Killings by County Income, 2015",
        caption = "Data: The Guardian / FiveThirtyEight") +
     theme_minimal()
-
 groupby_countyincome
 ```
 
@@ -131,7 +131,6 @@ groupbyage <- police_killings |>
        title = "US Police Killings by Age, 2015",
        caption = "Data: Data: The Guardian / FiveThirtyEight") +
     theme_minimal()
-
 groupbyage
 ```
 
