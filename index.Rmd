@@ -121,6 +121,22 @@ groupby_countyincome
 ```
 
 
+## Police Killings by Age
+
+```{r}
+police_killings$age <- as.numeric(as.character(police_killings$age))
+
+groupbyage <- police_killings |>
+  ggplot(aes(x = age)) +
+  geom_histogram(fill = "indianred4", color = "black") +
+  labs(x = "Age of Deceased",
+       y = "Number of Occurences",
+       title = "US Police Killings by Age, 2015",
+       caption = "Data: Data: The Guardian / FiveThirtyEight") +
+    theme_minimal()
+groupbyage
+```
+
 
 
 
