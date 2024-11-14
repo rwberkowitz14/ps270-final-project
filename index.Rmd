@@ -53,7 +53,7 @@ While Black Americans make up only approximately 13% of the US population, they 
 majorityblack <- police_killings |>
   mutate(majority_black = if_else(share_black > 50, "Majority Black", "Not Majority Black")) |>
   ggplot(aes(x = majority_black)) +
-  geom_bar(fill = "orange4") +
+  geom_bar(fill = "orange2") +
   labs(x = "Tract Demographics",
        y = "Number of Occurences",
        title = "US Police Killings by Share of County Black Population, 2015",
