@@ -118,6 +118,7 @@ groupby_race <- police_killings |>
        caption = "Data: The Guardian / FiveThirtyEight") +
   theme_minimal()
 groupby_race
+
 ```
 
 ```{r Police Killings by Race Table}
@@ -224,6 +225,7 @@ theme(axis.text.x = element_text(angle = 45, hjust = 0.9))
 education_plot
 ```
 
+
 For another more advanced analysis, we map the interaction of education rates and the racial makeup of tracts from earlier. For this analysis, I have slightly condensed the categories for education levels to produce a more visually pleasing plot. 
 
 ```{r}
@@ -251,6 +253,8 @@ raceandeducation <- police_killings |>
     axis.text.x = element_text(angle = 45, hjust = 0.9))
 raceandeducation
 ```
+
+
 ```{r}
 library(modelsummary)
 
@@ -260,10 +264,14 @@ killings_by_tract <- police_killings |>
 
 combined_data <- merge(killings_by_tract, police_killings, by = "tract_ce")
 
-model <- lm(killings_count ~ college, data = combined_data)
+model <- lm(killings_count ~ raceethnicity, data = combined_data)
 modelsummary::modelsummary(list(model))
 ```
 
+```{r}
+model2 <- lm(college ~ raceethnicity, data = police_killings)
+summary(model2)
+```
 
 
 
