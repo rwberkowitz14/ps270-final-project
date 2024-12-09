@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/figure-html5/unnamed-chunk-8-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.28/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/Mapping-1.png","index_files/figure-html5/Police Killings by Age Plot-1.png","index_files/figure-html5/Police Killings by County Demographics Plot-1.png","index_files/figure-html5/Police Killings by County Income Plot-1.png","index_files/figure-html5/Police Killings by Race and Poverty Plot-1.png","index_files/figure-html5/Police Killings by Race Plot-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/figure-html5/unnamed-chunk-8-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.28/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1543,37 +1543,296 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
-<h2 id="milestone-4">Milestone 4</h2>
-<p>How do rates of police killings in the US vary with respect to the racial and socioeconomic composition of the areas in which they take place? In this study, I aim to analyze the relationship between rates of police killings and the racial composition, average personal and household income, unemployment rates, poverty rates, and average education levels in their respective cities/states. I hypothesize that higher rates of police killings take place in areas with lower white populations, higher Black and Hispanic/Latino populations, lower average personal and household income, higher average poverty and unemployment rates, and lower average education rates (measured by attainment of BA or a higher degree). Given historical divisions of American cities along lines of race and class (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black and Hispanic/Latino individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles in areas with certain racial and socioeconomic make-ups. My variables of interest are the city and state where the killing occurred, the racial profile of the deceased civilian, the share of the population in the respective region which is non-Hispanic white, black, and Hispanic/Latino, the tract-level median personal and household income, the tract-level poverty and unemployment rates, and the share of the population with a BA or higher degree. If I observe higher rates of police killings in areas with lower white populations, higher Black and Hispanic/Latino populations, lower average personal and household income, higher average poverty and unemployment rates, and lower average education rates, my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven. Data from Fivethirtyeight “Where Police Have Killed Americans In 2015” (Info).</p>
+<h2 id="final-milestone">Final Milestone</h2>
+<p>How do rates of police killings in the US vary with respect to the racial and socioeconomic composition of the areas in which they take place? In this study, I aim to analyze the relationship between rates of police killings and the (a) racial composition (b) poverty rates in their respective cities/states, and (c) income by county.</p>
+<p>I hypothesize that police killings take place at disproportionately high rates in areas with higher Black populations, lower average personal and household income, higher average rates, and lower average education rates (measured by attainment of BA or a higher degree). Given historical divisions of American cities along lines of race and class (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles in areas with certain racial and socioeconomic make-ups. My variables of interest are the city and state where the killing occurred, the racial profile of the deceased civilian, the share of the population in the respective region which is non-Hispanic white, black, and Hispanic/Latino, the tract-level median personal and household income, the tract-level poverty and unemployment rates, and the share of the population with a BA or higher degree. If I observe higher rates of police killings in areas with lower white populations, higher Black and Hispanic/Latino populations, lower average personal and household income, higher average poverty and unemployment rates, and lower average education rates, my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven. Data from Fivethirtyeight “Where Police Have Killed Americans In 2015” (Info).</p>
+<p>First, we load the datasets and packages that we’ll be using later.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
-<span><span class='va'>police_killings</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"C:/Users/rwolf/OneDrive/Desktop/police_killings.csv"</span><span class='op'>)</span></span>
-<span><span class='va'>police_killings</span></span></code></pre>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://yihui.org/knitr/'>knitr</a></span><span class='op'>)</span></span>
+<span><span class='va'>police_killings</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"C:/Users/rwolf/OneDrive/Desktop/police_killings.csv"</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code># A tibble: 467 × 34
-   name     age   gender raceethnicity month   day  year streetaddress
-   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;        
- 1 A&#39;donte… 16    Male   Black         Febr…    23  2015 Clearview Ln 
- 2 Aaron R… 27    Male   White         April     2  2015 300 block Ir…
- 3 Aaron S… 26    Male   White         March    14  2015 22nd Ave and…
- 4 Aaron V… 25    Male   Hispanic/Lat… March    11  2015 3000 Seminol…
- 5 Adam Jo… 29    Male   White         March    19  2015 364 Hiwood A…
- 6 Adam Re… 29    Male   White         March     7  2015 18th St and …
- 7 Adrian … 22    Male   Hispanic/Lat… March    27  2015 4000 Union A…
- 8 Adrian … 35    Male   Hispanic/Lat… March    26  2015 1500 Bayview…
- 9 Alan Al… 44    Male   White         Janu…    28  2015 Pickett Runn…
-10 Alan Ja… 31    Male   White         Febr…     7  2015 200 Abbie St…
-# ℹ 457 more rows
-# ℹ 26 more variables: city &lt;chr&gt;, state &lt;chr&gt;, latitude &lt;dbl&gt;,
-#   longitude &lt;dbl&gt;, state_fp &lt;dbl&gt;, county_fp &lt;dbl&gt;, tract_ce &lt;dbl&gt;,
-#   geo_id &lt;dbl&gt;, county_id &lt;dbl&gt;, namelsad &lt;chr&gt;,
-#   lawenforcementagency &lt;chr&gt;, cause &lt;chr&gt;, armed &lt;chr&gt;, pop &lt;dbl&gt;,
-#   share_white &lt;chr&gt;, share_black &lt;chr&gt;, share_hispanic &lt;chr&gt;,
-#   p_income &lt;chr&gt;, h_income &lt;dbl&gt;, county_income &lt;dbl&gt;, …</code></pre>
+</div>
+<h2 id="introduction">Introduction</h2>
+<p>To begin, let’s get a couple of general tables/visualizations of this data before we analyze specific metrics. First, here’s a list of killings by state. Note that North Dakota, South Dakota, Rhode Island, and Vermont recorded 0 police killings in this dataset.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>killings_by_state</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>state</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>Count <span class='op'>=</span> <span class='va'>n</span>, State <span class='op'>=</span> <span class='va'>state</span><span class='op'>)</span></span>
+<span><span class='va'>killings_by_state</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">State</th>
+<th style="text-align: right;">Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AK</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AL</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">AR</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AZ</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CA</td>
+<td style="text-align: right;">74</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CO</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CT</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DC</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DE</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FL</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GA</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HI</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IA</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ID</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IL</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">IN</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KS</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KY</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LA</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MA</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MD</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ME</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MI</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MN</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MO</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MS</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MT</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NC</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NE</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NH</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NJ</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NM</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NV</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NY</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">OH</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">OK</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">OR</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PA</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SC</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TN</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TX</td>
+<td style="text-align: right;">46</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UT</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">VA</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WA</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WI</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">WV</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">WY</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Next, let’s get a visual sense of the concentration of these killings by state. More advanced analysis will come into play later, but it’s interesting to first get a sense of where these killings are occurring at the highest rates. Here’s our map:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-spatial.github.io/sf/'>sf</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>maps</span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://sjmgarnier.github.io/viridis/'>viridis</a></span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>killings_by_state</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>state</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>count <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span></span>
+<span><span class='va'>killings_by_state</span></span></code></pre>
+</div>
+<pre><code># A tibble: 47 × 2
+# Groups:   state [47]
+   state count
+   &lt;chr&gt; &lt;int&gt;
+ 1 AK        2
+ 2 AL        8
+ 3 AR        4
+ 4 AZ       25
+ 5 CA       74
+ 6 CO       12
+ 7 CT        1
+ 8 DC        1
+ 9 DE        2
+10 FL       29
+# ℹ 37 more rows</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>abbreviations</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span>  state_name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Alabama"</span>, <span class='st'>"Alaska"</span>, <span class='st'>"Arizona"</span>, <span class='st'>"Arkansas"</span>, <span class='st'>"California"</span>, <span class='st'>"Colorado"</span>, </span>
+<span>                    <span class='st'>"Connecticut"</span>, <span class='st'>"Delaware"</span>, <span class='st'>"Florida"</span>, <span class='st'>"Georgia"</span>, <span class='st'>"Hawaii"</span>, <span class='st'>"Idaho"</span>, </span>
+<span>                    <span class='st'>"Illinois"</span>, <span class='st'>"Indiana"</span>, <span class='st'>"Iowa"</span>, <span class='st'>"Kansas"</span>, <span class='st'>"Kentucky"</span>, <span class='st'>"Louisiana"</span>, </span>
+<span>                    <span class='st'>"Maine"</span>, <span class='st'>"Maryland"</span>, <span class='st'>"Massachusetts"</span>, <span class='st'>"Michigan"</span>, <span class='st'>"Minnesota"</span>, </span>
+<span>                    <span class='st'>"Mississippi"</span>, <span class='st'>"Missouri"</span>, <span class='st'>"Montana"</span>, <span class='st'>"Nebraska"</span>, <span class='st'>"Nevada"</span>, </span>
+<span>                    <span class='st'>"New Hampshire"</span>, <span class='st'>"New Jersey"</span>, <span class='st'>"New Mexico"</span>, <span class='st'>"New York"</span>, </span>
+<span>                    <span class='st'>"North Carolina"</span>, <span class='st'>"North Dakota"</span>, <span class='st'>"Ohio"</span>, <span class='st'>"Oklahoma"</span>, <span class='st'>"Oregon"</span>, </span>
+<span>                    <span class='st'>"Pennsylvania"</span>, <span class='st'>"Rhode Island"</span>, <span class='st'>"South Carolina"</span>, <span class='st'>"South Dakota"</span>, </span>
+<span>                    <span class='st'>"Tennessee"</span>, <span class='st'>"Texas"</span>, <span class='st'>"Utah"</span>, <span class='st'>"Vermont"</span>, <span class='st'>"Virginia"</span>, <span class='st'>"Washington"</span>, </span>
+<span>                    <span class='st'>"West Virginia"</span>, <span class='st'>"Wisconsin"</span>, <span class='st'>"Wyoming"</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span>  abbreviation <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"AL"</span>, <span class='st'>"AK"</span>, <span class='st'>"AZ"</span>, <span class='st'>"AR"</span>, <span class='st'>"CA"</span>, <span class='st'>"CO"</span>, <span class='st'>"CT"</span>, <span class='st'>"DE"</span>, <span class='st'>"FL"</span>, <span class='st'>"GA"</span>, <span class='st'>"HI"</span>, </span>
+<span>                   <span class='st'>"ID"</span>, <span class='st'>"IL"</span>, <span class='st'>"IN"</span>, <span class='st'>"IA"</span>, <span class='st'>"KS"</span>, <span class='st'>"KY"</span>, <span class='st'>"LA"</span>, <span class='st'>"ME"</span>, <span class='st'>"MD"</span>, <span class='st'>"MA"</span>, <span class='st'>"MI"</span>, </span>
+<span>                   <span class='st'>"MN"</span>, <span class='st'>"MS"</span>, <span class='st'>"MO"</span>, <span class='st'>"MT"</span>, <span class='st'>"NE"</span>, <span class='st'>"NV"</span>, <span class='st'>"NH"</span>, <span class='st'>"NJ"</span>, <span class='st'>"NM"</span>, <span class='st'>"NY"</span>, <span class='st'>"NC"</span>, </span>
+<span>                   <span class='st'>"ND"</span>, <span class='st'>"OH"</span>, <span class='st'>"OK"</span>, <span class='st'>"OR"</span>, <span class='st'>"PA"</span>, <span class='st'>"RI"</span>, <span class='st'>"SC"</span>, <span class='st'>"SD"</span>, <span class='st'>"TN"</span>, <span class='st'>"TX"</span>, <span class='st'>"UT"</span>, </span>
+<span>                   <span class='st'>"VT"</span>, <span class='st'>"VA"</span>, <span class='st'>"WA"</span>, <span class='st'>"WV"</span>, <span class='st'>"WI"</span>, <span class='st'>"WY"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>killings_by_state</span> <span class='op'>&lt;-</span> <span class='va'>killings_by_state</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>abbreviations</span>, by <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"state"</span> <span class='op'>=</span> <span class='st'>"abbreviation"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>us_map</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_as_sf.html'>st_as_sf</a></span><span class='op'>(</span><span class='fu'>maps</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/maps/man/map.html'>map</a></span><span class='op'>(</span><span class='st'>"state"</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, fill <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></span>
+<span><span class='va'>us_map</span><span class='op'>$</span><span class='va'>state_name</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span><span class='op'>(</span><span class='va'>us_map</span><span class='op'>$</span><span class='va'>ID</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>map_killings</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span><span class='op'>(</span><span class='va'>us_map</span>, <span class='va'>killings_by_state</span>, by.x <span class='op'>=</span> <span class='st'>"state_name"</span>, by.y <span class='op'>=</span> <span class='st'>"state_name"</span>, all.x <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>map_killings</span><span class='op'>$</span><span class='va'>count</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>map_killings</span><span class='op'>$</span><span class='va'>count</span><span class='op'>)</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>0</span></span>
+<span></span>
+<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>map_killings</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggsf.html'>geom_sf</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>count</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_viridis.html'>scale_fill_viridis_c</a></span><span class='op'>(</span>option <span class='op'>=</span> <span class='st'>"C"</span>, na.value <span class='op'>=</span> <span class='st'>"darkblue"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Police Killings by State, 2015"</span>,</span>
+<span>       caption <span class='op'>=</span> <span class='st'>"Data: The Guardian / FiveThirtyEight"</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/Mapping-1.png" width="624" /></p>
 </div>
 <h2 id="police-killings-by-race">Police Killings by Race</h2>
+<p>Next, let’s get a sense of how police killings vary by race. Below we have both a plot and a table with that information:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>groupby_race</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
@@ -1588,7 +1847,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span></span>
 <span><span class='va'>groupby_race</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+<p><img src="index_files/figure-html5/Police%20Killings%20by%20Race%20Plot-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1636,6 +1895,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p>While Black Americans make up only approximately 13% of the US population, they made up 135 out of the 467 deceased in this dataset, or approximately 28.9%. This fits with the hypothesis that American policing has historically targeted Black Americans at higher rates; still, this data by itself is not sufficient for a proper analysis of the relationship between race and police killings. In order to advance this analysis, let’s look at incidences of police killings with respect to county racial demographics.</p>
 <h2 id="police-killings-by-county-demographics">Police Killings by County Demographics</h2>
+<p>Here, we sort police killings by whether they occurred in a majority-black tract. We now advance beyond an analysis of individual killings, focusing instead on a more systemic parameter.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>majorityblack</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
@@ -1649,7 +1909,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span></span>
 <span><span class='va'>majorityblack</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+<p><img src="index_files/figure-html5/Police%20Killings%20by%20County%20Demographics%20Plot-1.png" width="624" /></p>
 </div>
 <p>While only 7% of Americans live in majority-Black tracts, nearly a quarter of police killings occurred in majority-Black tracts. Not only does the race of an individual track with the rate of police killings – racial makeup of the area in which the killing occurs is clearly relevant.</p>
 <p>Next, let’s add a socioeconomic component. A tract is classified as having a high poverty rate if at least 20% of the population lives below the poverty line (USDA ERS). Approximately 11-12% of tracts fit this classification (Census.gov). Let’s see what happens when we observe the interaction of racial and socioeconomic demographics.</p>
@@ -1672,9 +1932,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>    axis.text.x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>angle <span class='op'>=</span> <span class='fl'>45</span>, hjust <span class='op'>=</span> <span class='fl'>0.9</span><span class='op'>)</span><span class='op'>)</span></span>
 <span><span class='va'>raceandpoverty</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+<p><img src="index_files/figure-html5/Police%20Killings%20by%20Race%20and%20Poverty%20Plot-1.png" width="624" /></p>
 </div>
 <p>Evidently, poverty levels play into this analysis as well. The majority of killings (303 out of 467, or ~64.8%) were located in tracts classified as having high poverty levels. Of those, 79 occurred in majority Black tracts (79 out of 303 = ~26%, and 79 out of 467 = ~16.9%). Again, given the fact ~7% of tracts are majority Black, and ~11-12% of tracts are classified as having high poverty levels, police killings take place at disproportionately high rates in areas with majority Black populations and higher poverty levels.</p>
+<p>An alternate presentation of this data is presented below in table form:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
@@ -1729,7 +1990,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span></span>
 <span><span class='va'>groupby_countyincome</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+<p><img src="index_files/figure-html5/Police%20Killings%20by%20County%20Income%20Plot-1.png" width="624" /></p>
 </div>
 <h2 id="police-killings-by-age">Police Killings by Age</h2>
 <div class="layout-chunk" data-layout="l-body">
@@ -1746,7 +2007,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span></span>
 <span><span class='va'>groupbyage</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+<p><img src="index_files/figure-html5/Police%20Killings%20by%20Age%20Plot-1.png" width="624" /></p>
 </div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
