@@ -19,11 +19,19 @@ I hypothesize that police killings take place at disproportionately high rates i
 
 First, we load the datasets and packages that we'll be using later.
 
+```{r}
+getwd()
+```
+
+
 ```{r Loading Data}
 library(tidyverse)
 library(ggplot2)
 library(knitr)
 police_killings <- read_csv("C:/Users/rwolf/OneDrive/Desktop/police_killings.csv")
+police_killings |>
+  group_by(armed, cause) |>
+  count()
 ```
 # Data
 
