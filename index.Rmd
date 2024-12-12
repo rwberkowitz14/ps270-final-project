@@ -219,6 +219,8 @@ ggplot(data = map_killings) +
        caption = "Data: The Guardian / FiveThirtyEight")
 ```
 
+
+
 # Conclusion
 
 #### Sources:
