@@ -9,19 +9,19 @@ output:
 
 # Introduction
 
-In instances of police killings of Americans, how does cause of death vary with respect to racial and socioeconomic demographics, as well as whether the deceased was armed? In this study, I aim to analyze the relationship between types of police killings and the (a) racial identity of the subject, (b) type of weapon (if any) that the subject was carrying, and (c) racial composition of the county in which the killing occurred.
+In instances of police killings of Americans, how does cause of death vary with respect to racial demographics, as well as whether the deceased was armed? In this study, I aim to analyze the relationship between types of police killings and the (a) racial identity of the subject and (b) type of weapon (if any) that the subject was carrying.
 
-I hypothesize that death by gunshot takes place at disproportionately high rates for (a) armed subjects, (b) Black Americans, and (c) areas with higher Black populations. Given historical divisions of American cities along lines of race and class (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles in areas with certain racial and socioeconomic make-ups -- specifically, the trend in police killings of unarmed Black men and youth has sparked debate over the structure and function of 21st century American policing.
+I hypothesize that death by gunshot takes place at disproportionately high rates for (a) armed subjects and (b) Black Americans. Given historical divisions of American cities along lines of race and class (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles -- specifically, the trend in police killings of Black men and youth, often unarmed, has sparked debate over the structure and function of 21st century American policing.
 
-My variables of interest are the state where the killing occurred; the racial profile of the deceased civilian; the cause of death; whether the individual was armed, and with what weapon; and the share of the population in the respective region which is non-Hispanic White, Black, and Hispanic/Latino. If I observe higher rates of death by gunshot for armed individuals, Black individuals, and in areas with higher Black populations(those three variables are separate for the sake of this analysis), my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven.
+My variables of interest are the state where the killing occurred; the racial profile of the deceased civilian; the cause of death; and whether the individual was armed, and with what weapon. If I observe higher rates of death by gunshot for armed individuals, and Black individuals (those two variables are separate for the sake of this analysis), my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven.
 
 # Data
 
 Next, let's discuss how we got the data, what it is, what it represents, and how it's measured.
 
-Data is from Fivethirtyeight “Where Police Have Killed Americans In 2015” (Info).mThe Guardian compiled data on the name, age, gender, and race/ethnicity of the deceased, the date of the killing, the location of the incident, the agency (police dept) involved, the cause of death, and whether the deceased was armed. Data on county and tract level racial demographics, socioeconomic data, education rates, and state/county/tract codes came from US Census data. According to FiveThirtyEight, the Guardian built its dataset by combining media coverage, reader submissions and open-sourced efforts like Fatal Encounters and Killed by Police. The Guardian verified the incidents with its own reporting, calling its data “verified crowdsourced.” FiveThirtyEight compiled the Guardian data into GitHub along with the census data.
+Data is from Fivethirtyeight “Where Police Have Killed Americans In 2015” (Info). The Guardian compiled data on the name, age, gender, and race/ethnicity of the deceased, the date of the killing, the location of the incident, the agency (police dept) involved, the cause of death, and whether the deceased was armed. Data on county and tract level racial demographics, socioeconomic data, education rates, and state/county/tract codes came from US Census data. According to FiveThirtyEight, the Guardian built its dataset by combining media coverage, reader submissions and open-sourced efforts like Fatal Encounters and Killed by Police. The Guardian verified the incidents with its own reporting, calling its data “verified crowdsourced.” FiveThirtyEight compiled the Guardian data into GitHub along with the census data.
 
-Our independent variables are race/ethnicity of deceased, whether victim was armed, and racial demographic of the relevant tract (specifically for our case, percent of population that is Black). The dependent variable we're measuring is the cause of death, specifically gunshot or non-gunshot. The data is cross-sectional.
+Our independent variables are race/ethnicity of deceased and whether victim was armed. The dependent variable we're measuring is the cause of death -- for the regression analysis, specifically gunshot or non-gunshot. The data is cross-sectional, as it was all taken from 2015 and does not use any time-based analysis.
 
 ## Preparing the Data
 
@@ -67,7 +67,7 @@ police_killings_firstplot <- police_killings |>
   group_by(cause) |>
   summarize(n = n()) |>
   ggplot(aes(x = cause, y = n)) +
-  geom_col(fill = "cadetblue4") +
+  geom_col(fill = "darkorchid") +
   labs(x = "Cause of Death",
        y = "Number of Occurences",
        title = "US Police Killings by Cause of Death, 2015",
@@ -77,7 +77,6 @@ police_killings_firstplot
 ```
 
 Clearly, gunshots are by far the leading cause of death. To even out the dependent variable and tidy the data for a regression analysis, we will condense non-gunshot causes of death into a new variable. Remember, `0` represents non-gunshot deaths, and `1` represents death by gunshot.
-
 
 ```{r Second DV Plot}
 police_killings_secondplot <- police_killings |>
@@ -89,7 +88,7 @@ police_killings_secondplot <- police_killings |>
   group_by(cause_of_death) |>
   summarize(n = n()) |>
   ggplot(aes(x = cause_of_death, y = n)) +
-  geom_col(fill = "darkorchid4") +
+  geom_col(fill = "tomato3") +
   labs(x = "Cause of Death",
        y = "Number of Occurences",
        title = "US Police Killings by Cause of Death, 2015",
@@ -103,18 +102,16 @@ Now that we've got that data, let's analyze and plot the relationship between th
 
 # Results
 
-
-
 ## Police Killings by Race
 
-Next, we see how overall police killings vary by race.
+First, it's interesting to see how overall police killings vary by race. This isn't to back up the hypothesis, but rather to give a useful visualization which can help us better understand this dataset.
 
 ```{r Police Killings by Race Plot}
 groupby_race <- police_killings |>
   group_by(raceethnicity) |>
   summarize(n = n()) |>
   ggplot(aes(x = raceethnicity, y = n)) +
-  geom_col(fill = "steelblue") +
+  geom_col(fill = "slateblue4") +
   labs(x = "Race/Ethnicity of Deceased",
        y = "Number of Occurences",
        title = "US Police Killings by Race, 2015",
@@ -124,10 +121,27 @@ groupby_race
 
 ```
 
-While Black Americans make up only approximately 13% of the US population, they made up 135 out of the 467 deceased in this dataset, or approximately 28.9%. This fits with the hypothesis that American policing has historically targeted Black Americans at higher rates; still, this data by itself is not sufficient for a proper analysis of the relationship between race and police killings.
+While Black Americans make up only approximately 13% of the US population, they made up 135 out of the 467 deceased in this dataset, or approximately 28.9%.
 
+But more pertinent to our analysis, how does cause of death vary by race?
 
-## Police Killings by County Demographics
+## Cause of Death by Race
+
+```{r Cause of Death by Race}
+
+```
+
+## Cause of Death by Whether Individual Was Armed
+
+Next, how does cause of death vary by whether the individual was armed?
+
+```{r Cause of Death by Weapon}
+
+```
+
+## Regression
+
+Police Killings by County Demographics
 
 Here, we sort police killings by whether they occurred in a majority-black tract. We now advance beyond an analysis of individual killings, focusing instead on a more systemic parameter.
 
@@ -148,40 +162,8 @@ While only 7% of Americans live in majority-Black tracts, nearly a quarter of po
 
 Next, let's add a socioeconomic component. Again, a tract is classified as having a high poverty rate if at least 20% of the population lives below the poverty line (USDA ERS). Approximately 11-12% of tracts fit this classification (Census.gov). Let's see what happens when we observe the interaction of racial and socioeconomic demographics.
 
-```{r Police Killings by Race and Poverty Plot}
-raceandpoverty <- police_killings |>
-  mutate(majority_black = if_else(share_black > 50, "Majority Black", "Not Majority Black"),
-         povertyrate = if_else(pov >= 20, "High Poverty", "Not High Poverty"),
-         interaction = interaction(majority_black, povertyrate)) |>
-  group_by(interaction) |>
-  count() |>
-  ggplot(aes(x = interaction, y = n, fill = interaction)) +
-  geom_bar(stat = "identity") +
-   labs(x = "Race and Poverty Demographics",
-       y = "Number of Occurences",
-       title = "US Police Killings by Race and Poverty, 2015",
-       caption = "Data: The Guardian / FiveThirtyEight") +
-    theme_minimal() +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 0.9))
-raceandpoverty
-```
 
-Evidently, poverty levels play into this analysis as well. The majority of killings (303 out of 467, or \~64.8%) were located in tracts classified as having high poverty levels. Of those, 79 occurred in majority Black tracts (79 out of 303 = \~26%, and 79 out of 467 = \~16.9%). Again, given the fact \~7% of tracts are majority Black, and \~11-12% of tracts are classified as having high poverty levels, police killings take place at disproportionately high rates in areas with majority Black populations and higher poverty levels.
 
-An alternate presentation of this data is presented below in table form:
-
-```{r Police Killings by Race and Poverty Table}
-police_killings |>
-  mutate(majority_black = if_else(share_black > 50, "Majority Black", "Not Majority Black"),
-         povertyrate = if_else(pov >= 20, "High Poverty", "Not High Poverty"),
-         interaction = interaction(majority_black, povertyrate)) |>
-  group_by(interaction) |>
-  count() |> 
-  rename(`Race and Poverty` = interaction,
-         `Number of Occurences` = n) |>
-  knitr::kable()
-```
 
 # Additional Visualizations
 

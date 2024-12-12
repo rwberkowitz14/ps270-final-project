@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/Killings by County Education Rate-1.png","index_files/figure-html5/Mapping-1.png","index_files/figure-html5/Police Killings by Age Plot-1.png","index_files/figure-html5/Police Killings by County Demographics Plot-1.png","index_files/figure-html5/Police Killings by County Income Plot-1.png","index_files/figure-html5/Police Killings by Race and Poverty Plot-1.png","index_files/figure-html5/Police Killings by Race Plot-1.png","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/figure-html5/unnamed-chunk-8-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.28/header-attrs.js","index_files/header-attrs-2.29/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/First DV Plot-1.png","index_files/figure-html5/Killings by County Education Rate-1.png","index_files/figure-html5/Mapping-1.png","index_files/figure-html5/Police Killings by Age Plot-1.png","index_files/figure-html5/Police Killings by County Demographics Plot-1.png","index_files/figure-html5/Police Killings by County Income Plot-1.png","index_files/figure-html5/Police Killings by Race and Poverty Plot-1.png","index_files/figure-html5/Police Killings by Race Plot-1.png","index_files/figure-html5/Second DV Plot-1.png","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/figure-html5/unnamed-chunk-8-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.28/header-attrs.js","index_files/header-attrs-2.29/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1544,78 +1544,138 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <h1 id="introduction">Introduction</h1>
-<p>In instances of police killings of Americans, how does cause of death vary with respect to racial and socioeconomic demographics, as well as whether the deceased was armed? In this study, I aim to analyze the relationship between types of police killings and the (a) racial identity of the subject, (b) type of weapon (if any) that the subject was carrying, (c) racial composition of the county in which the killing occurred, and (d) poverty rates in the respective census tract (using US census definition of poverty).</p>
-<p>I hypothesize that police killings take place at disproportionately high rates in areas with higher Black populations, higher rates of poverty by census tract, and lower rates of education. Given historical divisions of American cities along lines of race and class (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles in areas with certain racial and socioeconomic make-ups. My variables of interest are the state where the killing occurred; the racial profile of the deceased civilian; the share of the population in the respective region which is non-Hispanic White, Black, and Hispanic/Latino; the tract-level poverty rate; and the average education rate of the county. If I observe higher rates of police killings in areas with higher Black populations, higher average poverty rates, and lower education rates, my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven. Data is from Fivethirtyeight “Where Police Have Killed Americans In 2015” (Info).</p>
-<h2 id="loading-the-data">Loading the Data</h2>
-<p>First, we load the datasets and packages that we’ll be using later.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] &quot;C:/Users/rwolf/OneDrive/Documents/ps270-final-project&quot;</code></pre>
-</div>
+<p>In instances of police killings of Americans, how does cause of death vary with respect to racial and socioeconomic demographics, as well as whether the deceased was armed? In this study, I aim to analyze the relationship between types of police killings and the (a) racial identity of the subject, (b) type of weapon (if any) that the subject was carrying, and (c) racial composition of the county in which the killing occurred.</p>
+<p>I hypothesize that death by gunshot takes place at disproportionately high rates for (a) armed subjects, (b) Black Americans, and (c) areas with higher Black populations. Given historical divisions of American cities along lines of race and class (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles in areas with certain racial and socioeconomic make-ups – specifically, the trend in police killings of unarmed Black men and youth has sparked debate over the structure and function of 21st century American policing.</p>
+<p>My variables of interest are the state where the killing occurred; the racial profile of the deceased civilian; the cause of death; whether the individual was armed, and with what weapon; and the share of the population in the respective region which is non-Hispanic White, Black, and Hispanic/Latino. If I observe higher rates of death by gunshot for armed individuals, Black individuals, and in areas with higher Black populations(those three variables are separate for the sake of this analysis), my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven.</p>
+<h1 id="data">Data</h1>
+<p>Next, let’s discuss how we got the data, what it is, what it represents, and how it’s measured.</p>
+<p>Data is from Fivethirtyeight “Where Police Have Killed Americans In 2015” (Info).mThe Guardian compiled data on the name, age, gender, and race/ethnicity of the deceased, the date of the killing, the location of the incident, the agency (police dept) involved, the cause of death, and whether the deceased was armed. Data on county and tract level racial demographics, socioeconomic data, education rates, and state/county/tract codes came from US Census data. According to FiveThirtyEight, the Guardian built its dataset by combining media coverage, reader submissions and open-sourced efforts like Fatal Encounters and Killed by Police. The Guardian verified the incidents with its own reporting, calling its data “verified crowdsourced.” FiveThirtyEight compiled the Guardian data into GitHub along with the census data.</p>
+<p>Our independent variables are race/ethnicity of deceased, whether victim was armed, and racial demographic of the relevant tract (specifically for our case, percent of population that is Black). The dependent variable we’re measuring is the cause of death, specifically gunshot or non-gunshot. The data is cross-sectional.</p>
+<h2 id="preparing-the-data">Preparing the Data</h2>
+<p>Now, we load the datasets and packages that we’ll be using later.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://yihui.org/knitr/'>knitr</a></span><span class='op'>)</span></span>
 <span><span class='va'>police_killings</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"C:/Users/rwolf/OneDrive/Desktop/police_killings.csv"</span><span class='op'>)</span></span>
-<span><span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
+<span><span class='va'>police_killings_grouped</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cause</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>`Cause of Death` <span class='op'>=</span> <span class='va'>cause</span>, `Incidences` <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span> </span>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>police_killings_grouped</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code># A tibble: 5 × 2
-# Groups:   cause [5]
-  cause                 n
-  &lt;chr&gt;             &lt;int&gt;
-1 Death in custody     14
-2 Gunshot             411
-3 Struck by vehicle    12
-4 Taser                27
-5 Unknown               3</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Cause of Death</th>
+<th style="text-align: right;">Incidences</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Death in custody</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gunshot</td>
+<td style="text-align: right;">411</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Struck by vehicle</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Taser</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Unknown</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
 </div>
+<p>For this analysis, we code cause of death as a dummy variable. In this case, <code>1</code> means death by gunshot, and <code>0</code> means death by any other cause.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>police_killings</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>police_killings_dummy</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>cause_of_death <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span><span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Death in custody"</span> <span class='op'>~</span> <span class='fl'>0</span>,</span>
 <span>                                    <span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Gunshot"</span> <span class='op'>~</span> <span class='fl'>1</span>,</span>
 <span>                                    <span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Struck by vehicle"</span> <span class='op'>~</span> <span class='fl'>0</span>,</span>
 <span>                                    <span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Taser"</span> <span class='op'>~</span> <span class='fl'>0</span>,</span>
-<span>                                    <span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Unknown"</span> <span class='op'>~</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span></span>
-<span><span class='va'>police_killings</span></span></code></pre>
+<span>                                    <span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Unknown"</span> <span class='op'>~</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cause_of_death</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>`Cause of Death` <span class='op'>=</span> <span class='va'>cause_of_death</span>, `Incidences` <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span> </span>
+<span>  </span>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>police_killings_dummy</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code># A tibble: 467 × 35
-   name     age   gender raceethnicity month   day  year streetaddress
-   &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;        
- 1 A&#39;donte… 16    Male   Black         Febr…    23  2015 Clearview Ln 
- 2 Aaron R… 27    Male   White         April     2  2015 300 block Ir…
- 3 Aaron S… 26    Male   White         March    14  2015 22nd Ave and…
- 4 Aaron V… 25    Male   Hispanic/Lat… March    11  2015 3000 Seminol…
- 5 Adam Jo… 29    Male   White         March    19  2015 364 Hiwood A…
- 6 Adam Re… 29    Male   White         March     7  2015 18th St and …
- 7 Adrian … 22    Male   Hispanic/Lat… March    27  2015 4000 Union A…
- 8 Adrian … 35    Male   Hispanic/Lat… March    26  2015 1500 Bayview…
- 9 Alan Al… 44    Male   White         Janu…    28  2015 Pickett Runn…
-10 Alan Ja… 31    Male   White         Febr…     7  2015 200 Abbie St…
-# ℹ 457 more rows
-# ℹ 27 more variables: city &lt;chr&gt;, state &lt;chr&gt;, latitude &lt;dbl&gt;,
-#   longitude &lt;dbl&gt;, state_fp &lt;dbl&gt;, county_fp &lt;dbl&gt;, tract_ce &lt;dbl&gt;,
-#   geo_id &lt;dbl&gt;, county_id &lt;dbl&gt;, namelsad &lt;chr&gt;,
-#   lawenforcementagency &lt;chr&gt;, cause &lt;chr&gt;, armed &lt;chr&gt;, pop &lt;dbl&gt;,
-#   share_white &lt;chr&gt;, share_black &lt;chr&gt;, share_hispanic &lt;chr&gt;,
-#   p_income &lt;chr&gt;, h_income &lt;dbl&gt;, county_income &lt;dbl&gt;, …</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Cause of Death</th>
+<th style="text-align: right;">Incidences</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">56</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">411</td>
+</tr>
+</tbody>
+</table>
 </div>
-<h1 id="data">Data</h1>
-<p>Next, let’s discuss how we got the data, what it is, what it represents, and how it’s measured.</p>
-<p>The Guardian compiled data on the name, age, gender, and race/ethnicity of the deceased, the date of the killing, the location of the incident, the agency (police dept) involved, the cause of death, and whether the deceased was armed. Data on county and tract level racial demographics, socioeconomic data, education rates, and state/county/tract codes came from US Census data. According to FiveThirtyEight, the Guardian built its dataset by combining media coverage, reader submissions and open-sourced efforts like Fatal Encounters and Killed by Police. The Guardian verified the incidents with its own reporting, calling its data “verified crowdsourced.” FiveThirtyEight compiled the Guardian data into GitHub along with the census data.</p>
-<p>Our independent variables are race/ethnicity of deceased, state in which the killing occurred (just for a preliminary examination of the data), racial demographic of the relevant tract (specifically for our case, percent of population that is Black), tract-level poverty rate, and tract-level education rate. The dependent variable we’re measuring is number of incidences of police killings. The data is cross-sectional.</p>
-<p>As for how variables of interest were measured:
-1. Poverty level: official tract-level poverty rate as defined by the US Census (A tract is classified as having a high poverty rate if at least 20% of the population lives below the poverty line (USDA ERS)).
-2. Education level: percent of the population of interest (tract-level) aged 25+ who have obtained a Bachelor’s Degree or higher.</p>
-<h2 id="general-information-on-dependent-variable">General Information on Dependent Variable</h2>
+<h2 id="visualizing-the-dependent-variable">Visualizing the Dependent Variable</h2>
+<p>Let’s see what the dependent variable looks like before we analyze it. I will produce two plots: one displaying all causes of death, and one displaying the dummy variable that we created (we’ll use this for the regression model later on).</p>
+<p>First, here are all causes of death and their incidence rates:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>police_killings_firstplot</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cause</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>cause</span>, y <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='st'>"cadetblue4"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Cause of Death"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Number of Occurences"</span>,</span>
+<span>       title <span class='op'>=</span> <span class='st'>"US Police Killings by Cause of Death, 2015"</span>,</span>
+<span>       caption <span class='op'>=</span> <span class='st'>"Data: The Guardian / FiveThirtyEight"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>police_killings_firstplot</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/First%20DV%20Plot-1.png" width="624" /></p>
+</div>
+<p>Clearly, gunshots are by far the leading cause of death. To even out the dependent variable and tidy the data for a regression analysis, we will condense non-gunshot causes of death into a new variable. Remember, <code>0</code> represents non-gunshot deaths, and <code>1</code> represents death by gunshot.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>police_killings_secondplot</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>cause_of_death <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span><span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Death in custody"</span> <span class='op'>~</span> <span class='fl'>0</span>,</span>
+<span>                                    <span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Gunshot"</span> <span class='op'>~</span> <span class='fl'>1</span>,</span>
+<span>                                    <span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Struck by vehicle"</span> <span class='op'>~</span> <span class='fl'>0</span>,</span>
+<span>                                    <span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Taser"</span> <span class='op'>~</span> <span class='fl'>0</span>,</span>
+<span>                                    <span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Unknown"</span> <span class='op'>~</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cause_of_death</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>cause_of_death</span>, y <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='st'>"darkorchid4"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Cause of Death"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Number of Occurences"</span>,</span>
+<span>       title <span class='op'>=</span> <span class='st'>"US Police Killings by Cause of Death, 2015"</span>,</span>
+<span>       subtitle <span class='op'>=</span> <span class='st'>"Dummy Variable Visualization"</span>,</span>
+<span>       caption <span class='op'>=</span> <span class='st'>"Data: The Guardian / FiveThirtyEight"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>police_killings_secondplot</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/Second%20DV%20Plot-1.png" width="624" /></p>
+</div>
+<p>Now that we’ve got that data, let’s analyze and plot the relationship between the independent and dependent variables.</p>
 <h1 id="results">Results</h1>
 <h2 id="police-killings-by-race">Police Killings by Race</h2>
-<p>Next, let’s get a sense of how police killings vary by race. Below we have both a plot and a table with that information:</p>
+<p>Next, we see how overall police killings vary by race.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>groupby_race</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
@@ -1632,51 +1692,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p><img src="index_files/figure-html5/Police%20Killings%20by%20Race%20Plot-1.png" width="624" /></p>
 </div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>raceethnicity</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>`Race/Ethnicity` <span class='op'>=</span> <span class='va'>raceethnicity</span>,</span>
-<span>         `Number of Occurences` <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
-</div>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Race/Ethnicity</th>
-<th style="text-align: right;">Number of Occurences</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Asian/Pacific Islander</td>
-<td style="text-align: right;">10</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Black</td>
-<td style="text-align: right;">135</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Hispanic/Latino</td>
-<td style="text-align: right;">67</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Native American</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Unknown</td>
-<td style="text-align: right;">15</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">White</td>
-<td style="text-align: right;">236</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>While Black Americans make up only approximately 13% of the US population, they made up 135 out of the 467 deceased in this dataset, or approximately 28.9%. This fits with the hypothesis that American policing has historically targeted Black Americans at higher rates; still, this data by itself is not sufficient for a proper analysis of the relationship between race and police killings. In order to advance this analysis, let’s look at incidences of police killings with respect to county racial demographics.</p>
+<p>While Black Americans make up only approximately 13% of the US population, they made up 135 out of the 467 deceased in this dataset, or approximately 28.9%. This fits with the hypothesis that American policing has historically targeted Black Americans at higher rates; still, this data by itself is not sufficient for a proper analysis of the relationship between race and police killings.</p>
 <h2 id="police-killings-by-county-demographics">Police Killings by County Demographics</h2>
 <p>Here, we sort police killings by whether they occurred in a majority-black tract. We now advance beyond an analysis of individual killings, focusing instead on a more systemic parameter.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1758,205 +1774,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </tbody>
 </table>
 </div>
-<h2 id="police-killings-by-tract-education-rate">Police Killings by Tract Education Rate</h2>
-<p>Next, we group these killings by education rate – again, measured by the percentage of the tract aged 25+ that has obtained a Bachelor’s Degree or higher.</p>
-<p>According to the US census, between 2011 and 2021, the percentage of people age 25 and older who had completed a bachelor’s degree or higher increased by 7.5 percentage points from 30.4% to 37.9%. Thus, we can assume that in 2015, approximately 30-38% of Americans had obtained a BA or higher, serving as a reference point for this plot.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>killings_by_education</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>percentcollege <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
-<span>    <span class='va'>college</span> <span class='op'>&lt;</span> <span class='fl'>0.1</span> <span class='op'>~</span> <span class='st'>"&lt;10%"</span>,</span>
-<span>    <span class='va'>college</span> <span class='op'>&gt;=</span> <span class='fl'>0.1</span> <span class='op'>&amp;</span> <span class='va'>college</span> <span class='op'>&lt;</span> <span class='fl'>0.2</span> <span class='op'>~</span> <span class='st'>"10-20%"</span>,</span>
-<span>    <span class='va'>college</span> <span class='op'>&gt;=</span> <span class='fl'>0.2</span> <span class='op'>&amp;</span> <span class='va'>college</span> <span class='op'>&lt;</span> <span class='fl'>0.3</span> <span class='op'>~</span> <span class='st'>"20-30%"</span>,</span>
-<span>    <span class='va'>college</span> <span class='op'>&gt;=</span> <span class='fl'>0.3</span> <span class='op'>&amp;</span> <span class='va'>college</span> <span class='op'>&lt;</span> <span class='fl'>0.4</span> <span class='op'>~</span> <span class='st'>"30-40%"</span>,</span>
-<span>    <span class='va'>college</span> <span class='op'>&gt;=</span> <span class='fl'>0.4</span> <span class='op'>&amp;</span> <span class='va'>college</span> <span class='op'>&lt;</span> <span class='fl'>0.5</span> <span class='op'>~</span> <span class='st'>"40-50%"</span>,</span>
-<span>    <span class='va'>college</span> <span class='op'>&gt;=</span> <span class='fl'>0.5</span> <span class='op'>&amp;</span> <span class='va'>college</span> <span class='op'>&lt;</span> <span class='fl'>0.6</span> <span class='op'>~</span> <span class='st'>"50-60%"</span>,</span>
-<span>    <span class='va'>college</span> <span class='op'>&gt;=</span> <span class='fl'>0.6</span> <span class='op'>&amp;</span> <span class='va'>college</span> <span class='op'>&lt;</span> <span class='fl'>0.7</span> <span class='op'>~</span> <span class='st'>"60-70%"</span>,</span>
-<span>    <span class='va'>college</span> <span class='op'>&gt;=</span> <span class='fl'>0.7</span> <span class='op'>&amp;</span> <span class='va'>college</span> <span class='op'>&lt;</span> <span class='fl'>0.8</span> <span class='op'>~</span> <span class='st'>"70-80%"</span>,</span>
-<span>    <span class='va'>college</span> <span class='op'>&gt;=</span> <span class='fl'>0.8</span> <span class='op'>~</span> <span class='st'>"80+%"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span><span class='op'>(</span><span class='va'>percentcollege</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>percentcollege</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>education_plot</span> <span class='op'>&lt;-</span> <span class='va'>killings_by_education</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>percentcollege</span>, y <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"identity"</span>, fill <span class='op'>=</span> <span class='st'>"darkgreen"</span>, color <span class='op'>=</span> <span class='st'>"black"</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Percentage of Population with BA or Higher"</span>,</span>
-<span>       y <span class='op'>=</span> <span class='st'>"Number of Killings"</span>,</span>
-<span>       title <span class='op'>=</span> <span class='st'>"US Police Killings by Tract-Level Education"</span>,</span>
-<span>       caption <span class='op'>=</span> <span class='st'>"Data: The Guardian / FiveThirtyEight"</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>axis.text.x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>angle <span class='op'>=</span> <span class='fl'>45</span>, hjust <span class='op'>=</span> <span class='fl'>0.9</span><span class='op'>)</span><span class='op'>)</span> </span>
-<span><span class='va'>education_plot</span></span></code></pre>
-</div>
-<p><img src="index_files/figure-html5/Killings%20by%20County%20Education%20Rate-1.png" width="624" /></p>
-</div>
-<p>For another more advanced analysis, we map the interaction of education rates and the racial makeup of tracts from earlier. For this analysis, I have slightly condensed the categories for education levels to produce a more visually pleasing plot.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>raceandeducation</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>majority_black <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>share_black</span> <span class='op'>&gt;</span> <span class='fl'>50</span>, <span class='st'>"Majority Black"</span>, <span class='st'>"Not Majority Black"</span><span class='op'>)</span>,</span>
-<span>         percentcollege2 <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span></span>
-<span>           <span class='va'>college</span> <span class='op'>&lt;</span> <span class='fl'>0.15</span> <span class='op'>~</span> <span class='st'>"&lt;15%"</span>,</span>
-<span>           <span class='va'>college</span> <span class='op'>&gt;=</span> <span class='fl'>0.15</span> <span class='op'>&amp;</span> <span class='va'>college</span> <span class='op'>&lt;</span> <span class='fl'>0.3</span> <span class='op'>~</span> <span class='st'>"15-30%"</span>,</span>
-<span>           <span class='va'>college</span> <span class='op'>&gt;=</span> <span class='fl'>0.3</span> <span class='op'>&amp;</span> <span class='va'>college</span> <span class='op'>&lt;</span> <span class='fl'>0.45</span> <span class='op'>~</span> <span class='st'>"30-45%"</span>,</span>
-<span>           <span class='va'>college</span> <span class='op'>&gt;=</span> <span class='fl'>0.45</span> <span class='op'>&amp;</span> <span class='va'>college</span> <span class='op'>&lt;</span> <span class='fl'>0.6</span> <span class='op'>~</span> <span class='st'>"45-60%"</span>,</span>
-<span>           <span class='va'>college</span> <span class='op'>&gt;=</span> <span class='fl'>0.6</span> <span class='op'>&amp;</span> <span class='va'>college</span> <span class='op'>&lt;</span> <span class='fl'>0.75</span> <span class='op'>~</span> <span class='st'>"60-70%"</span>,</span>
-<span>           <span class='va'>college</span> <span class='op'>&gt;=</span> <span class='fl'>0.75</span> <span class='op'>~</span> <span class='st'>"75+%"</span><span class='op'>)</span>,</span>
-<span>         interaction <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interaction.html'>interaction</a></span><span class='op'>(</span><span class='va'>majority_black</span>, <span class='va'>percentcollege2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span><span class='op'>(</span><span class='va'>percentcollege2</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>interaction</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>interaction</span>, y <span class='op'>=</span> <span class='va'>n</span>, fill <span class='op'>=</span> <span class='va'>interaction</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"identity"</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Interaction: Majority-Black Tract and % of Tract Attaining BA or Higher"</span>,</span>
-<span>       y <span class='op'>=</span> <span class='st'>"Number of Occurences"</span>,</span>
-<span>       title <span class='op'>=</span> <span class='st'>"US Police Killings by Race and Education, 2015"</span>,</span>
-<span>       caption <span class='op'>=</span> <span class='st'>"Data: The Guardian / FiveThirtyEight"</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span></span>
-<span>    axis.text.x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>angle <span class='op'>=</span> <span class='fl'>45</span>, hjust <span class='op'>=</span> <span class='fl'>0.9</span><span class='op'>)</span><span class='op'>)</span></span>
-<span><span class='va'>raceandeducation</span></span></code></pre>
-</div>
-<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://modelsummary.com'>modelsummary</a></span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>killings_by_tract</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>tract_ce</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>killings_count <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>combined_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span><span class='op'>(</span><span class='va'>killings_by_tract</span>, <span class='va'>police_killings</span>, by <span class='op'>=</span> <span class='st'>"tract_ce"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>killings_count</span> <span class='op'>~</span> <span class='va'>raceethnicity</span>, data <span class='op'>=</span> <span class='va'>combined_data</span><span class='op'>)</span></span>
-<span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://modelsummary.com/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
-</div>
-<table style="width:58%;">
-<colgroup>
-<col style="width: 43%" />
-<col style="width: 15%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th><ol type="1">
-<li></li>
-</ol></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>(Intercept)</td>
-<td>1.300</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>(0.289)</td>
-</tr>
-<tr class="odd">
-<td>raceethnicityBlack</td>
-<td>0.144</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>(0.299)</td>
-</tr>
-<tr class="odd">
-<td>raceethnicityHispanic/Latino</td>
-<td>0.058</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>(0.309)</td>
-</tr>
-<tr class="odd">
-<td>raceethnicityNative American</td>
-<td>0.200</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>(0.540)</td>
-</tr>
-<tr class="odd">
-<td>raceethnicityUnknown</td>
-<td>0.300</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>(0.373)</td>
-</tr>
-<tr class="odd">
-<td>raceethnicityWhite</td>
-<td>0.242</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>(0.295)</td>
-</tr>
-<tr class="odd">
-<td>Num.Obs.</td>
-<td>467</td>
-</tr>
-<tr class="even">
-<td>R2</td>
-<td>0.007</td>
-</tr>
-<tr class="odd">
-<td>R2 Adj.</td>
-<td>-0.004</td>
-</tr>
-<tr class="even">
-<td>AIC</td>
-<td>1247.9</td>
-</tr>
-<tr class="odd">
-<td>BIC</td>
-<td>1276.9</td>
-</tr>
-<tr class="even">
-<td>Log.Lik.</td>
-<td>-616.959</td>
-</tr>
-<tr class="odd">
-<td>RMSE</td>
-<td>0.91</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>college</span> <span class='op'>~</span> <span class='va'>raceethnicity</span>, data <span class='op'>=</span> <span class='va'>police_killings</span><span class='op'>)</span></span>
-<span><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model2</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>
-Call:
-lm(formula = college ~ raceethnicity, data = police_killings)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--0.21468 -0.10952 -0.05131  0.06703  0.60997 
-
-Coefficients:
-                             Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)                   0.27626    0.04973   5.556  4.7e-08 ***
-raceethnicityBlack           -0.05816    0.05156  -1.128   0.2599    
-raceethnicityHispanic/Latino -0.09943    0.05331  -1.865   0.0628 .  
-raceethnicityNative American -0.17892    0.09303  -1.923   0.0551 .  
-raceethnicityUnknown         -0.08460    0.06420  -1.318   0.1882    
-raceethnicityWhite           -0.04101    0.05077  -0.808   0.4196    
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-Residual standard error: 0.1573 on 459 degrees of freedom
-  (2 observations deleted due to missingness)
-Multiple R-squared:  0.02442,   Adjusted R-squared:  0.01379 
-F-statistic: 2.298 on 5 and 459 DF,  p-value: 0.04428</code></pre>
-</div>
 <h1 id="additional-visualizations">Additional Visualizations</h1>
-<p>Finally, just as an interesting additional visualization, here’s a map of killings by state. Note that North Dakota, South Dakota, Rhode Island, and Vermont recorded 0 police killings in this dataset.</p>
+<p>Finally, let’s add to this research with a couple of interesting visualizations.</p>
+<p>First, here’s a map of killings by state. Note that North Dakota, South Dakota, Rhode Island, and Vermont recorded 0 police killings in this dataset.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
@@ -2029,7 +1849,7 @@ F-statistic: 2.298 on 5 and 459 DF,  p-value: 0.04428</code></pre>
 <li><p><a href="https://github.com/fivethirtyeight/data/tree/master/police-killings" class="uri">https://github.com/fivethirtyeight/data/tree/master/police-killings</a></p></li>
 <li><p><a href="https://www.theguardian.com/us-news/ng-interactive/2015/jun/01/the-counted-police-killings-us-database" class="uri">https://www.theguardian.com/us-news/ng-interactive/2015/jun/01/the-counted-police-killings-us-database</a></p></li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
