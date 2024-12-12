@@ -15,7 +15,6 @@ I hypothesize that death by gunshot takes place at disproportionately high rates
 
 My variables of interest are the state where the killing occurred; the racial profile of the deceased civilian; the cause of death; whether the individual was armed, and with what weapon; the share of the population in the respective region which is non-Hispanic White, Black, and Hispanic/Latino; and the tract-level poverty rate. If I observe higher rates of death by gunshot for armed individuals, Black individuals, in areas with higher Black populations, and in areas with higher average poverty rates (those four variables are separate for the sake of this analysis), my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven. 
 
-
 # Data
 
 Next, let's discuss how we got the data, what it is, what it represents, and how it's measured.
@@ -27,7 +26,7 @@ Our independent variables are race/ethnicity of deceased, whether victim was arm
 Race, cause of death, whether individual was armed, and county racial demographic data are fairly self-explanatory. As for how the other variable of interest was measured:
 1. Poverty level: official tract-level poverty rate as defined by the US Census (A tract is classified as having a high poverty rate if at least 20% of the population lives below the poverty line (USDA ERS)).
 
-## Loading the Data
+## Preparing the Data
 
 Now, we load the datasets and packages that we'll be using later.
 
@@ -45,7 +44,7 @@ knitr::kable(police_killings_grouped)
 
 For this analysis, we code cause of death as a dummy variable. In this case, `1` means death by gunshot, and `0` means death by any other cause. 
 
-```{r}
+```{r Initial Data as Dummy Variable}
 police_killings_dummy <- police_killings |>
   mutate(cause_of_death = case_when(cause == "Death in custody" ~ 0,
                                     cause == "Gunshot" ~ 1,
@@ -61,14 +60,51 @@ knitr::kable(police_killings_dummy)
 
 ## Visualizing the Dependent Variable
 
+Let's see what the dependent variable looks like before we analyze it. I will produce two plots: one displaying all causes of death, and one displaying the dummy variable that we created (we'll use this for the regression model later on).
 
+First, here are all causes of death and their incidence rates:
 
-# Results
+```{r First DV Plot}
+
+police_killings_firstplot <- police_killings |>
+  group_by(cause) |>
+  summarize(n = n()) |>
+  ggplot(aes(x = cause, y = n)) +
+  geom_col(fill = "cadetblue4") +
+  labs(x = "Cause of Death",
+       y = "Number of Occurences",
+       title = "US Police Killings by Cause of Death, 2015",
+       caption = "Data: The Guardian / FiveThirtyEight") +
+  theme_minimal()
+police_killings_firstplot
+```
+
+Clearly, gunshots are by far the leading cause of death. To even out the dependent variable and tidy the data for a regression analysis, we will condense non-gunshot causes of death into a new variable. Remember, `0` represents non-gunshot deaths, and `1` represents death by gunshot.
+
+```{r Second DV Plot}
+police_killings_secondplot <- police_killings |>
+  mutate(cause_of_death = case_when(cause == "Death in custody" ~ 0,
+                                    cause == "Gunshot" ~ 1,
+                                    cause == "Struck by vehicle" ~ 0,
+                                    cause == "Taser" ~ 0,
+                                    cause == "Unknown" ~ 0)) |>
+  group_by(cause_of_death) |>
+  summarize(n = n()) |>
+  ggplot(aes(x = cause_of_death, y = n)) +
+  geom_col(fill = "darkorchid4") +
+  labs(x = "Cause of Death",
+       y = "Number of Occurences",
+       title = "US Police Killings by Cause of Death, 2015",
+       subtitle = "Dummy Variable Visualization",
+       caption = "Data: The Guardian / FiveThirtyEight") +
+  theme_minimal()
+police_killings_secondplot
+```
+
 
 ## Police Killings by Race
 
-Next, let's get a sense of how police killings vary by race. Below we have both a plot and a table with that information:
-
+Next, we see how overall police killings vary by race. 
 
 ```{r Police Killings by Race Plot}
 groupby_race <- police_killings |>
@@ -85,16 +121,10 @@ groupby_race
 
 ```
 
-```{r Police Killings by Race Table}
-police_killings |>
-  group_by(raceethnicity) |>
-  count() |>
-  rename(`Race/Ethnicity` = raceethnicity,
-         `Number of Occurences` = n) |>
-  knitr::kable()
-```
+While Black Americans make up only approximately 13% of the US population, they made up 135 out of the 467 deceased in this dataset, or approximately 28.9%. This fits with the hypothesis that American policing has historically targeted Black Americans at higher rates; still, this data by itself is not sufficient for a proper analysis of the relationship between race and police killings. 
 
-While Black Americans make up only approximately 13% of the US population, they made up 135 out of the 467 deceased in this dataset, or approximately 28.9%. This fits with the hypothesis that American policing has historically targeted Black Americans at higher rates; still, this data by itself is not sufficient for a proper analysis of the relationship between race and police killings. In order to advance this analysis, let's look at incidences of police killings with respect to county racial demographics.
+# Results
+
 
 ## Police Killings by County Demographics
 
@@ -153,16 +183,11 @@ police_killings |>
 ```
 
 
-## Police Killings by Tract Education Rate
-
-Next, we group these killings by education rate -- again, measured by the percentage of the tract aged 25+ that has obtained a Bachelor's Degree or higher. 
-
-According to the US census, between 2011 and 2021, the percentage of people age 25 and older who had completed a bachelor's degree or higher increased by 7.5 percentage points from 30.4% to 37.9%. Thus, we can assume that in 2015, approximately 30-38% of Americans had obtained a BA or higher, serving as a reference point for this plot. 
-
-
 # Additional Visualizations
 
-Finally, just as an interesting additional visualization, here's a map of killings by state. Note that North Dakota, South Dakota, Rhode Island, and Vermont recorded 0 police killings in this dataset.
+Finally, let's add to this research with a couple of interesting visualizations.
+
+First, here's a map of killings by state. Note that North Dakota, South Dakota, Rhode Island, and Vermont recorded 0 police killings in this dataset.
 
 ```{r Mapping}
 
@@ -211,7 +236,6 @@ ggplot(data = map_killings) +
   labs(title = "Police Killings by State, 2015",
        caption = "Data: The Guardian / FiveThirtyEight")
 ```
-
 
 # Conclusion
 
