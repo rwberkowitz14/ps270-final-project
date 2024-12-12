@@ -9,11 +9,11 @@ output:
 
 # Introduction
 
-In instances of police killings of Americans, how does cause of death vary with respect to racial and socioeconomic demographics, as well as whether the deceased was armed? In this study, I aim to analyze the relationship between types of police killings and the (a) racial identity of the subject, (b) type of weapon (if any) that the subject was carrying, (c) racial composition of the county in which the killing occurred, and (d) poverty rates in the respective census tract (using US census definition of poverty). 
+In instances of police killings of Americans, how does cause of death vary with respect to racial and socioeconomic demographics, as well as whether the deceased was armed? In this study, I aim to analyze the relationship between types of police killings and the (a) racial identity of the subject, (b) type of weapon (if any) that the subject was carrying, and (c) racial composition of the county in which the killing occurred.
 
-I hypothesize that death by gunshot takes place at disproportionately high rates for (a) armed subjects, (b) Black Americans, (c) areas with higher Black populations, and (d) areas with higher rates of poverty by census tract. Given historical divisions of American cities along lines of race and class (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles in areas with certain racial and socioeconomic make-ups -- specifically, the trend in police killings of unarmed Black men and youth has sparked debate over the structure and function of 21st century American policing.
+I hypothesize that death by gunshot takes place at disproportionately high rates for (a) armed subjects, (b) Black Americans, and (c) areas with higher Black populations. Given historical divisions of American cities along lines of race and class (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles in areas with certain racial and socioeconomic make-ups -- specifically, the trend in police killings of unarmed Black men and youth has sparked debate over the structure and function of 21st century American policing.
 
-My variables of interest are the state where the killing occurred; the racial profile of the deceased civilian; the cause of death; whether the individual was armed, and with what weapon; the share of the population in the respective region which is non-Hispanic White, Black, and Hispanic/Latino; and the tract-level poverty rate. If I observe higher rates of death by gunshot for armed individuals, Black individuals, in areas with higher Black populations, and in areas with higher average poverty rates (those four variables are separate for the sake of this analysis), my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven. 
+My variables of interest are the state where the killing occurred; the racial profile of the deceased civilian; the cause of death; whether the individual was armed, and with what weapon; and the share of the population in the respective region which is non-Hispanic White, Black, and Hispanic/Latino. If I observe higher rates of death by gunshot for armed individuals, Black individuals, and in areas with higher Black populations(those three variables are separate for the sake of this analysis), my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven.
 
 # Data
 
@@ -21,10 +21,7 @@ Next, let's discuss how we got the data, what it is, what it represents, and how
 
 Data is from Fivethirtyeight “Where Police Have Killed Americans In 2015” (Info).mThe Guardian compiled data on the name, age, gender, and race/ethnicity of the deceased, the date of the killing, the location of the incident, the agency (police dept) involved, the cause of death, and whether the deceased was armed. Data on county and tract level racial demographics, socioeconomic data, education rates, and state/county/tract codes came from US Census data. According to FiveThirtyEight, the Guardian built its dataset by combining media coverage, reader submissions and open-sourced efforts like Fatal Encounters and Killed by Police. The Guardian verified the incidents with its own reporting, calling its data “verified crowdsourced.” FiveThirtyEight compiled the Guardian data into GitHub along with the census data.
 
-Our independent variables are race/ethnicity of deceased, whether victim was armed, racial demographic of the relevant tract (specifically for our case, percent of population that is Black), and tract-level poverty rate. The dependent variable we're measuring is the cause of death, specifically gunshot or non-gunshot. The data is cross-sectional.
-
-Race, cause of death, whether individual was armed, and county racial demographic data are fairly self-explanatory. As for how the other variable of interest was measured:
-1. Poverty level: official tract-level poverty rate as defined by the US Census (A tract is classified as having a high poverty rate if at least 20% of the population lives below the poverty line (USDA ERS)).
+Our independent variables are race/ethnicity of deceased, whether victim was armed, and racial demographic of the relevant tract (specifically for our case, percent of population that is Black). The dependent variable we're measuring is the cause of death, specifically gunshot or non-gunshot. The data is cross-sectional.
 
 ## Preparing the Data
 
@@ -42,7 +39,7 @@ police_killings_grouped <- police_killings |>
 knitr::kable(police_killings_grouped)
 ```
 
-For this analysis, we code cause of death as a dummy variable. In this case, `1` means death by gunshot, and `0` means death by any other cause. 
+For this analysis, we code cause of death as a dummy variable. In this case, `1` means death by gunshot, and `0` means death by any other cause.
 
 ```{r Initial Data as Dummy Variable}
 police_killings_dummy <- police_killings |>
@@ -81,6 +78,7 @@ police_killings_firstplot
 
 Clearly, gunshots are by far the leading cause of death. To even out the dependent variable and tidy the data for a regression analysis, we will condense non-gunshot causes of death into a new variable. Remember, `0` represents non-gunshot deaths, and `1` represents death by gunshot.
 
+
 ```{r Second DV Plot}
 police_killings_secondplot <- police_killings |>
   mutate(cause_of_death = case_when(cause == "Death in custody" ~ 0,
@@ -101,10 +99,15 @@ police_killings_secondplot <- police_killings |>
 police_killings_secondplot
 ```
 
+Now that we've got that data, let's analyze and plot the relationship between the independent and dependent variables.
+
+# Results
+
+
 
 ## Police Killings by Race
 
-Next, we see how overall police killings vary by race. 
+Next, we see how overall police killings vary by race.
 
 ```{r Police Killings by Race Plot}
 groupby_race <- police_killings |>
@@ -121,9 +124,7 @@ groupby_race
 
 ```
 
-While Black Americans make up only approximately 13% of the US population, they made up 135 out of the 467 deceased in this dataset, or approximately 28.9%. This fits with the hypothesis that American policing has historically targeted Black Americans at higher rates; still, this data by itself is not sufficient for a proper analysis of the relationship between race and police killings. 
-
-# Results
+While Black Americans make up only approximately 13% of the US population, they made up 135 out of the 467 deceased in this dataset, or approximately 28.9%. This fits with the hypothesis that American policing has historically targeted Black Americans at higher rates; still, this data by itself is not sufficient for a proper analysis of the relationship between race and police killings.
 
 
 ## Police Killings by County Demographics
@@ -145,7 +146,7 @@ majorityblack
 
 While only 7% of Americans live in majority-Black tracts, nearly a quarter of police killings occurred in majority-Black tracts. Not only does the race of an individual track with the rate of police killings -- racial makeup of the area in which the killing occurs is clearly relevant.
 
-Next, let's add a socioeconomic component. Again, a tract is classified as having a high poverty rate if at least 20% of the population lives below the poverty line (USDA ERS). Approximately 11-12% of tracts fit this classification (Census.gov). Let's see what happens when we observe the interaction of racial and socioeconomic demographics. 
+Next, let's add a socioeconomic component. Again, a tract is classified as having a high poverty rate if at least 20% of the population lives below the poverty line (USDA ERS). Approximately 11-12% of tracts fit this classification (Census.gov). Let's see what happens when we observe the interaction of racial and socioeconomic demographics.
 
 ```{r Police Killings by Race and Poverty Plot}
 raceandpoverty <- police_killings |>
@@ -166,7 +167,7 @@ raceandpoverty <- police_killings |>
 raceandpoverty
 ```
 
-Evidently, poverty levels play into this analysis as well. The majority of killings (303 out of 467, or ~64.8%) were located in tracts classified as having high poverty levels. Of those, 79 occurred in majority Black tracts (79 out of 303 = ~26%, and 79 out of 467 = ~16.9%). Again, given the fact ~7% of tracts are majority Black, and ~11-12% of tracts are classified as having high poverty levels, police killings take place at disproportionately high rates in areas with majority Black populations and higher poverty levels.
+Evidently, poverty levels play into this analysis as well. The majority of killings (303 out of 467, or \~64.8%) were located in tracts classified as having high poverty levels. Of those, 79 occurred in majority Black tracts (79 out of 303 = \~26%, and 79 out of 467 = \~16.9%). Again, given the fact \~7% of tracts are majority Black, and \~11-12% of tracts are classified as having high poverty levels, police killings take place at disproportionately high rates in areas with majority Black populations and higher poverty levels.
 
 An alternate presentation of this data is presented below in table form:
 
@@ -181,7 +182,6 @@ police_killings |>
          `Number of Occurences` = n) |>
   knitr::kable()
 ```
-
 
 # Additional Visualizations
 
@@ -239,16 +239,10 @@ ggplot(data = map_killings) +
 
 # Conclusion
 
+#### Sources:
 
+1.  <https://fivethirtyeight.com/features/where-police-have-killed-americans-in-2015/>
 
+2.  <https://github.com/fivethirtyeight/data/tree/master/police-killings>
 
-#### Sources: 
-
-1. https://fivethirtyeight.com/features/where-police-have-killed-americans-in-2015/
-
-2. https://github.com/fivethirtyeight/data/tree/master/police-killings
-
-3. https://www.theguardian.com/us-news/ng-interactive/2015/jun/01/the-counted-police-killings-us-database
-
-
-
+3.  <https://www.theguardian.com/us-news/ng-interactive/2015/jun/01/the-counted-police-killings-us-database>
