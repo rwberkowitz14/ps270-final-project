@@ -1,112 +1,68 @@
 ---
-title: "PS270 Final Project"
+title: "PS270 Final Project: Police Killings of Americans in 2015"
 author: "Reuben Berkowitz"
-description: "My final project"
+description: "A demographic analysis of FiveThirtyEight and Guardian data on police killings of Americans in 2015"
 output:
   distill::distill_article:
     self_contained: false
 ---
 
-
-
 # Introduction
 
-How do rates of police killings in the US vary with respect to the racial and socioeconomic composition of the areas in which they take place? In this study, I aim to analyze the relationship between rates of police killings and the (a) racial identity of the subject, (b) racial composition of the county in which the killing occurred (c) poverty rates in the respective census tract (using US census definition of poverty), and (d) education rate by county (percent of population 25+ obtained BA or higher). 
+In instances of police killings of Americans, how does cause of death vary with respect to racial and socioeconomic demographics, as well as whether the deceased was armed? In this study, I aim to analyze the relationship between types of police killings and the (a) racial identity of the subject, (b) type of weapon (if any) that the subject was carrying, (c) racial composition of the county in which the killing occurred, and (d) poverty rates in the respective census tract (using US census definition of poverty). 
 
-I hypothesize that police killings take place at disproportionately high rates in areas with higher Black populations, higher rates of poverty by census tract, and lower rates of education. Given historical divisions of American cities along lines of race and class (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles in areas with certain racial and socioeconomic make-ups. My variables of interest are the state where the killing occurred; the racial profile of the deceased civilian; the share of the population in the respective region which is non-Hispanic White, Black, and Hispanic/Latino; the tract-level poverty rate; and the average education rate of the county. If I observe higher rates of police killings in areas with higher Black  populations, higher average poverty rates, and lower education rates, my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven. Data is from Fivethirtyeight “Where Police Have Killed Americans In 2015” (Info).
+I hypothesize that death by gunshot takes place at disproportionately high rates for (a) armed subjects, (b) Black Americans, (c) areas with higher Black populations, and (d) areas with higher rates of poverty by census tract. Given historical divisions of American cities along lines of race and class (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles in areas with certain racial and socioeconomic make-ups -- specifically, the trend in police killings of unarmed Black men and youth has sparked debate over the structure and function of 21st century American policing.
+
+My variables of interest are the state where the killing occurred; the racial profile of the deceased civilian; the cause of death; whether the individual was armed, and with what weapon; the share of the population in the respective region which is non-Hispanic White, Black, and Hispanic/Latino; and the tract-level poverty rate. If I observe higher rates of death by gunshot for armed individuals, Black individuals, in areas with higher Black populations, and in areas with higher average poverty rates (those four variables are separate for the sake of this analysis), my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven. 
+
+
+# Data
+
+Next, let's discuss how we got the data, what it is, what it represents, and how it's measured.
+
+Data is from Fivethirtyeight “Where Police Have Killed Americans In 2015” (Info).mThe Guardian compiled data on the name, age, gender, and race/ethnicity of the deceased, the date of the killing, the location of the incident, the agency (police dept) involved, the cause of death, and whether the deceased was armed. Data on county and tract level racial demographics, socioeconomic data, education rates, and state/county/tract codes came from US Census data. According to FiveThirtyEight, the Guardian built its dataset by combining media coverage, reader submissions and open-sourced efforts like Fatal Encounters and Killed by Police. The Guardian verified the incidents with its own reporting, calling its data “verified crowdsourced.” FiveThirtyEight compiled the Guardian data into GitHub along with the census data.
+
+Our independent variables are race/ethnicity of deceased, whether victim was armed, racial demographic of the relevant tract (specifically for our case, percent of population that is Black), and tract-level poverty rate. The dependent variable we're measuring is the cause of death, specifically gunshot or non-gunshot. The data is cross-sectional.
+
+Race, cause of death, whether individual was armed, and county racial demographic data are fairly self-explanatory. As for how the other variable of interest was measured:
+1. Poverty level: official tract-level poverty rate as defined by the US Census (A tract is classified as having a high poverty rate if at least 20% of the population lives below the poverty line (USDA ERS)).
 
 ## Loading the Data
 
-First, we load the datasets and packages that we'll be using later.
-
-```{r}
-getwd()
-```
-
+Now, we load the datasets and packages that we'll be using later.
 
 ```{r Loading Data}
 library(tidyverse)
 library(ggplot2)
 library(knitr)
 police_killings <- read_csv("C:/Users/rwolf/OneDrive/Desktop/police_killings.csv")
-police_killings |>
-  group_by(armed, cause) |>
-  count()
-```
-# Data
-
-Next, let's discuss how we got the data, what it is, what it represents, and how it's measured.
-
-The Guardian compiled data on the name, age, gender, and race/ethnicity of the deceased, the date of the killing, the location of the incident, the agency (police dept) involved, the cause of death, and whether the deceased was armed. Data on county and tract level racial demographics, socioeconomic data, education rates, and state/county/tract codes came from US Census data. According to FiveThirtyEight, the Guardian built its dataset by combining media coverage, reader submissions and open-sourced efforts like Fatal Encounters and Killed by Police. The Guardian verified the incidents with its own reporting, calling its data “verified crowdsourced.” FiveThirtyEight compiled the Guardian data into GitHub along with the census data.
-
-Our independent variables are race/ethnicity of deceased, state in which the killing occurred (just for a preliminary examination of the data), racial demographic of the relevant tract (specifically for our case, percent of population that is Black), tract-level poverty rate, and tract-level education rate. The dependent variable we're measuring is number of incidences of police killings. The data is cross-sectional.
-
-As for how variables of interest were measured:
-1. Poverty level: official tract-level poverty rate as defined by the US Census (A tract is classified as having a high poverty rate if at least 20% of the population lives below the poverty line (USDA ERS)).
-2. Education level: percent of the population of interest (tract-level) aged 25+ who have obtained a Bachelor's Degree or higher.
-
-## General Information on Dependent Variable
-
-To begin, let's get a couple of general tables/visualizations of this data before we analyze specific metrics. First, here's a list of killings by state. Note that North Dakota, South Dakota, Rhode Island, and Vermont recorded 0 police killings in this dataset.
-
-```{r Killings by State}
-killings_by_state <- police_killings |>
-  group_by(state) |>
+police_killings_grouped <- police_killings |>
+  group_by(cause) |>
   count() |>
-  rename(Count = n, State = state)
-killings_by_state |>
-  knitr::kable()
+  rename(`Cause of Death` = cause, `Incidences` = n) 
+knitr::kable(police_killings_grouped)
 ```
 
-Next, let's get a visual sense of the concentration of these killings by state. More advanced analysis will come into play later, but it's interesting to first get a sense of where these killings are occurring at the highest rates. Here's our map: 
+For this analysis, we code cause of death as a dummy variable. In this case, `1` means death by gunshot, and `0` means death by any other cause. 
 
-```{r Mapping}
-
-library(dplyr)
-library(sf)
-library(maps)
-library(viridis)
-
-killings_by_state <- police_killings |>
-  group_by(state) |>
+```{r}
+police_killings_dummy <- police_killings |>
+  mutate(cause_of_death = case_when(cause == "Death in custody" ~ 0,
+                                    cause == "Gunshot" ~ 1,
+                                    cause == "Struck by vehicle" ~ 0,
+                                    cause == "Taser" ~ 0,
+                                    cause == "Unknown" ~ 0)) |>
+  group_by(cause_of_death) |>
   count() |>
-  rename(count = n)
-killings_by_state
-
-abbreviations <- data.frame(
-  state_name = tolower(c("Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", 
-                    "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", 
-                    "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", 
-                    "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", 
-                    "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", 
-                    "New Hampshire", "New Jersey", "New Mexico", "New York", 
-                    "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", 
-                    "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", 
-                    "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", 
-                    "West Virginia", "Wisconsin", "Wyoming")),
-  abbreviation = c("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", 
-                   "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", 
-                   "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", 
-                   "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", 
-                   "VT", "VA", "WA", "WV", "WI", "WY"))
-
-killings_by_state <- killings_by_state |>
-  left_join(abbreviations, by = c("state" = "abbreviation"))
-
-us_map <- st_as_sf(maps::map("state", plot = FALSE, fill = TRUE))
-us_map$state_name <- tolower(us_map$ID)
-
-map_killings <- merge(us_map, killings_by_state, by.x = "state_name", by.y = "state_name", all.x = TRUE)
-
-map_killings$count[is.na(map_killings$count)] <- 0
-
-ggplot(data = map_killings) +
-  geom_sf(aes(fill = count), color = "black") +
-  scale_fill_viridis_c(option = "C", na.value = "darkblue") +
-    theme_minimal() +
-  labs(title = "Police Killings by State, 2015",
-       caption = "Data: The Guardian / FiveThirtyEight")
+  rename(`Cause of Death` = cause_of_death, `Incidences` = n) 
+  
+knitr::kable(police_killings_dummy)
 ```
+
+## Visualizing the Dependent Variable
+
+
+
 # Results
 
 ## Police Killings by Race
@@ -204,84 +160,71 @@ Next, we group these killings by education rate -- again, measured by the percen
 According to the US census, between 2011 and 2021, the percentage of people age 25 and older who had completed a bachelor's degree or higher increased by 7.5 percentage points from 30.4% to 37.9%. Thus, we can assume that in 2015, approximately 30-38% of Americans had obtained a BA or higher, serving as a reference point for this plot. 
 
 
-```{r Killings by County Education Rate}
+# Additional Visualizations
 
-killings_by_education <- police_killings |>
-  mutate(percentcollege = case_when(
-    college < 0.1 ~ "<10%",
-    college >= 0.1 & college < 0.2 ~ "10-20%",
-    college >= 0.2 & college < 0.3 ~ "20-30%",
-    college >= 0.3 & college < 0.4 ~ "30-40%",
-    college >= 0.4 & college < 0.5 ~ "40-50%",
-    college >= 0.5 & college < 0.6 ~ "50-60%",
-    college >= 0.6 & college < 0.7 ~ "60-70%",
-    college >= 0.7 & college < 0.8 ~ "70-80%",
-    college >= 0.8 ~ "80+%")) |>
-  drop_na(percentcollege) |>
-  group_by(percentcollege) |>
-  count()
+Finally, just as an interesting additional visualization, here's a map of killings by state. Note that North Dakota, South Dakota, Rhode Island, and Vermont recorded 0 police killings in this dataset.
 
-education_plot <- killings_by_education |>
-  ggplot(aes(x = percentcollege, y = n)) +
-  geom_bar(stat = "identity", fill = "darkgreen", color = "black") +
-  labs(x = "Percentage of Population with BA or Higher",
-       y = "Number of Killings",
-       title = "US Police Killings by Tract-Level Education",
-       caption = "Data: The Guardian / FiveThirtyEight") +
-  theme_minimal() +
-theme(axis.text.x = element_text(angle = 45, hjust = 0.9)) 
-education_plot
-```
+```{r Mapping}
 
+library(dplyr)
+library(sf)
+library(maps)
+library(viridis)
 
-For another more advanced analysis, we map the interaction of education rates and the racial makeup of tracts from earlier. For this analysis, I have slightly condensed the categories for education levels to produce a more visually pleasing plot. 
-
-```{r}
-raceandeducation <- police_killings |>
-  mutate(majority_black = if_else(share_black > 50, "Majority Black", "Not Majority Black"),
-         percentcollege2 = case_when(
-           college < 0.15 ~ "<15%",
-           college >= 0.15 & college < 0.3 ~ "15-30%",
-           college >= 0.3 & college < 0.45 ~ "30-45%",
-           college >= 0.45 & college < 0.6 ~ "45-60%",
-           college >= 0.6 & college < 0.75 ~ "60-70%",
-           college >= 0.75 ~ "75+%"),
-         interaction = interaction(majority_black, percentcollege2)) |>
-  drop_na(percentcollege2) |>
-  group_by(interaction) |>
+killings_by_state <- police_killings |>
+  group_by(state) |>
   count() |>
-  ggplot(aes(x = interaction, y = n, fill = interaction)) +
-  geom_bar(stat = "identity") +
-   labs(x = "Interaction: Majority-Black Tract and % of Tract Attaining BA or Higher",
-       y = "Number of Occurences",
-       title = "US Police Killings by Race and Education, 2015",
-       caption = "Data: The Guardian / FiveThirtyEight") +
+  rename(count = n)
+killings_by_state
+
+abbreviations <- data.frame(
+  state_name = tolower(c("Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", 
+                    "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", 
+                    "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", 
+                    "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", 
+                    "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", 
+                    "New Hampshire", "New Jersey", "New Mexico", "New York", 
+                    "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", 
+                    "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", 
+                    "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", 
+                    "West Virginia", "Wisconsin", "Wyoming")),
+  abbreviation = c("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", 
+                   "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", 
+                   "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", 
+                   "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", 
+                   "VT", "VA", "WA", "WV", "WI", "WY"))
+
+killings_by_state <- killings_by_state |>
+  left_join(abbreviations, by = c("state" = "abbreviation"))
+
+us_map <- st_as_sf(maps::map("state", plot = FALSE, fill = TRUE))
+us_map$state_name <- tolower(us_map$ID)
+
+map_killings <- merge(us_map, killings_by_state, by.x = "state_name", by.y = "state_name", all.x = TRUE)
+
+map_killings$count[is.na(map_killings$count)] <- 0
+
+ggplot(data = map_killings) +
+  geom_sf(aes(fill = count), color = "black") +
+  scale_fill_viridis_c(option = "C", na.value = "darkblue") +
     theme_minimal() +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 0.9))
-raceandeducation
+  labs(title = "Police Killings by State, 2015",
+       caption = "Data: The Guardian / FiveThirtyEight")
 ```
-
-
-```{r}
-library(modelsummary)
-
-killings_by_tract <- police_killings |>
-  group_by(tract_ce) |>
-  summarise(killings_count = n())
-
-combined_data <- merge(killings_by_tract, police_killings, by = "tract_ce")
-
-model <- lm(killings_count ~ raceethnicity, data = combined_data)
-modelsummary::modelsummary(list(model))
-```
-
-```{r}
-model2 <- lm(college ~ raceethnicity, data = police_killings)
-summary(model2)
-```
-
 
 
 # Conclusion
+
+
+
+
+#### Sources: 
+
+1. https://fivethirtyeight.com/features/where-police-have-killed-americans-in-2015/
+
+2. https://github.com/fivethirtyeight/data/tree/master/police-killings
+
+3. https://www.theguardian.com/us-news/ng-interactive/2015/jun/01/the-counted-police-killings-us-database
+
+
 
