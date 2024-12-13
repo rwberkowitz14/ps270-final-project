@@ -23,7 +23,7 @@ Data is from Fivethirtyeight “Where Police Have Killed Americans In 2015” (I
 
 Our independent variables are race/ethnicity of deceased and whether victim was armed. The dependent variable we're measuring is the cause of death -- for the regression analysis, specifically gunshot or non-gunshot. The data is cross-sectional, as it was all taken from 2015 and does not use any time-based analysis.
 
-## Preparing the Data
+### Preparing the Data
 
 Now, we load the datasets and packages that we'll be using later.
 
@@ -55,7 +55,7 @@ police_killings_dummy <- police_killings |>
 knitr::kable(police_killings_dummy)
 ```
 
-## Visualizing the Dependent Variable
+### Visualizing the Dependent Variable
 
 Let's see what the dependent variable looks like before we analyze it. I will produce two plots: one displaying all causes of death, and one displaying the dummy variable that we created (we'll use this for the regression model later on).
 
@@ -102,7 +102,7 @@ Now that we've got that data, let's analyze and plot the relationship between th
 
 # Results
 
-## Police Killings by Race
+### Police Killings by Race
 
 First, it's interesting to see how overall police killings vary by race. This isn't to back up the hypothesis, but rather to give a useful visualization which can help us better understand this dataset.
 
@@ -125,7 +125,7 @@ While Black Americans make up only approximately 13% of the US population, they 
 
 But more pertinent to our analysis, how does cause of death vary by race? Because we're on a scale of 0-1, the y-axis is measuring the percentage of deaths (for each race) which were caused by gunshot.
 
-## Cause of Death by Race
+### Cause of Death by Race
 
 ```{r Cause of Death by Race}
 
@@ -150,7 +150,7 @@ death_by_race
 
 Contrary to my hypothesis, Black Americans were not the racial/ethnic group with the highest death by gunshot rate. It appears that that metric pertains to the Hispanic/Latino group, followed by Unknown, followed by White. Nonetheless, there are possible confounders -- specifically whether the type of weapon carried by the deceased individual varied by race.
 
-## Cause of Death by Whether Individual Was Armed
+### Cause of Death by Whether Individual Was Armed
 
 Next, how does cause of death vary by whether the individual was armed?
 
@@ -178,39 +178,55 @@ death_by_weapon
 Perhaps surprisingly, individuals carrying firearms did not die by gunshot at higher rates than many of the other groups. Both the 'Disputed' and 'Non-lethal' firearm categories corresponded to 100% rate of death by gunshot. And even more surprisingly, it appears that police were more likely to shoot and kill individuals who were unarmed than individuals armed with a firearm. However, like the last plot, the relationship between race/ethnicity and the individual's weapon could confound these results. 
 
 
+### Interaction
 
-```{r}
-raceandeducation <- police_killings |>
-  mutate(majority_black = if_else(share_black > 50, "Majority Black", "Not Majority Black"),
-         percentcollege2 = case_when(
-           college < 0.15 ~ "<15%",
-           college >= 0.15 & college < 0.3 ~ "15-30%",
-           college >= 0.3 & college < 0.45 ~ "30-45%",
-           college >= 0.45 & college < 0.6 ~ "45-60%",
-           college >= 0.6 & college < 0.75 ~ "60-70%",
-           college >= 0.75 ~ "75+%"),
-         interaction = interaction(majority_black, percentcollege2)) |>
-  drop_na(percentcollege2) |>
+We won't be able to run this as a regression using the skills we've learned this semester, but I thought it would be interesting to compare rates of death by gunshot by creating an interaction variable between race and type of weapon. To avoid an overpacked x-axis, I mutated the 'armed' variable just for this plot, turning any weapon aside from "Firearm" into "Non-lethal" and keeping "Firearm" as "Lethal weapon". Here's what we find:
+
+
+```{r Interaction Plot}
+raceandarmed <- police_killings |>
+  mutate(lethalarm = case_when(armed == "Disputed" ~ "Non-lethal",
+                               armed == "Firearm" ~ "Lethal weapon",
+                               armed == "Knife"~ "Non-lethal",
+                               armed == "No" ~ "Non-lethal",
+                               armed == "Non-lethal firearm" ~ "Non-lethal",
+                               armed == "Other" ~ "Non-lethal",
+                               armed == "Unknown" ~ "Non-lethal",
+                               armed == "Vehicle" ~ "Non-lethal")) |>
+  mutate(interaction = interaction(raceethnicity, lethalarm)) |>
+  mutate(cause_of_death = case_when(cause == "Death in custody" ~ 0,
+                                    cause == "Gunshot" ~ 1,
+                                    cause == "Struck by vehicle" ~ 0,
+                                    cause == "Taser" ~ 0,
+                                    cause == "Unknown" ~ 0)) |>
   group_by(interaction) |>
+  summarize(mean_cause_of_death = mean(cause_of_death)) 
+  
+raceandarmed$interaction <- factor(raceandarmed$interaction, levels = c("Asian/Pacific Islander.Lethal weapon", "Asian/Pacific Islander.Non-lethal", "Black.Lethal weapon", "Black.Non-lethal", "Hispanic/Latino.Lethal weapon", "Hispanic/Latino.Non-lethal", "Native American.Lethal weapon", "Native American.Non-lethal", "Unknown.Lethal weapon", "Unknown.Non-lethal", "White.Lethal weapon", "White.Non-lethal"))
 
-killings_by_state <- police_killings |>
-  group_by(state) |>
-  count() |>
-  ggplot(aes(x = interaction, y = n, fill = interaction)) +
+raceandarmed |>
+  ggplot(aes(x = interaction, y = mean_cause_of_death, fill = interaction)) +
   geom_bar(stat = "identity") +
-   labs(x = "Interaction: Majority-Black Tract and % of Tract Attaining BA or Higher",
-       y = "Number of Occurences",
-       title = "US Police Killings by Race and Education, 2015",
-       caption = "Data: The Guardian / FiveThirtyEight")
+   labs(x = "Interaction: Race/Ethnicity and Whether Individual Was Lethally Armed",
+       y = "Percent of Deaths by Gunshot",
+       title = "US Police Killings by Race and Weapon of Subject, 2015",
+       caption = "Data: The Guardian / FiveThirtyEight") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, size = 7)) +
+  theme(plot.margin = unit(c(1, 1, 2, 1), "cm"),
+        legend.position = "none")
+
+raceandarmed
 ```
 
+It appears that Hispanic/Latino individuals, armed or not, experienced the highest rates of death by gunshot (aside from the Unknown race category, but that's hard to interpret). We do see that Black individuals die by gunshot at higher rates when they're not lethally armed than when they're armed with a lethal firearm, which suggests some support for my hypothesis but cannot be interpreted as causal without a regression model.
+
+Talking of regression models...
+
+### Regression
 
 
-## Regression
 
-
-
-# Additional Visualizations
+### Additional Visualizations
 
 Finally, let's add to this research with a couple of interesting visualizations.
 
