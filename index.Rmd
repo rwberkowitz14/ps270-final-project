@@ -123,7 +123,9 @@ groupby_race
 
 While Black Americans make up only approximately 13% of the US population, they made up 135 out of the 467 deceased in this dataset, or approximately 28.9%.
 
-But more pertinent to our analysis, how does cause of death vary by race? Because we're on a scale of 0-1, the y-axis is measuring the percentage of deaths (for each race) which were caused by gunshot.
+But more pertinent to our analysis, how does cause of death vary by race? 
+
+Note: because we're on a scale of 0-1, the y-axis is measuring the percentage of deaths (for each race) which were caused by gunshot.
 
 ### Cause of Death by Race
 
@@ -215,7 +217,6 @@ raceandarmed |>
   theme(plot.margin = unit(c(1, 1, 2, 1), "cm"),
         legend.position = "none") 
 
-raceandarmed
 
 ```
 
