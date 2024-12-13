@@ -11,7 +11,7 @@ output:
 
 In instances of police killings of Americans, how does cause of death vary with respect to racial demographics, as well as whether the deceased was armed? In this study, I aim to analyze the relationship between types of police killings and the (a) racial identity of the subject and (b) type of weapon (if any) that the subject was carrying.
 
-I hypothesize that death by gunshot takes place at disproportionately high rates for (a) armed subjects and (b) Black Americans. Given historical divisions of American cities along lines of race and class (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles -- specifically, the trend in police killings of Black men and youth, often unarmed, has sparked debate over the structure and function of 21st century American policing.
+I hypothesize that death by gunshot takes place at disproportionately high rates for (a) armed subjects and (b) Black Americans. For (a), I reason that sensing a direct threat makes police more likely to retaliate with lethal force. For (b), given historical divisions of American cities along lines of race (redlining, segregation of schools and public facilities, discrimination in K-12 and higher education, the school-to-prison pipeline, etc.), and systemic police discrimination against Black individuals and communities, modern policing in the United States is notorious for its systematic and individual targeting of individuals of specific racial profiles -- specifically, the trend in police killings of Black men and youth, often unarmed, has sparked debate over the structure and function of 21st century American policing. 
 
 My variables of interest are the state where the killing occurred; the racial profile of the deceased civilian; the cause of death; and whether the individual was armed, and with what weapon. If I observe higher rates of death by gunshot for armed individuals, and Black individuals (those two variables are separate for the sake of this analysis), my hypothesis will be supported. If not, or (more likely) if there is ambiguity or lack of distinct correlation between one or more of these variables and rates of police killings, my hypothesis would be partially or fully disproven.
 
@@ -67,7 +67,7 @@ police_killings_firstplot <- police_killings |>
   group_by(cause) |>
   summarize(n = n()) |>
   ggplot(aes(x = cause, y = n)) +
-  geom_col(fill = "darkorchid") +
+  geom_col(fill = "slateblue2") +
   labs(x = "Cause of Death",
        y = "Number of Occurences",
        title = "US Police Killings by Cause of Death, 2015",
@@ -123,13 +123,32 @@ groupby_race
 
 While Black Americans make up only approximately 13% of the US population, they made up 135 out of the 467 deceased in this dataset, or approximately 28.9%.
 
-But more pertinent to our analysis, how does cause of death vary by race?
+But more pertinent to our analysis, how does cause of death vary by race? Because we're on a scale of 0-1, the y-axis is measuring the percentage of deaths (for each race) which were caused by gunshot.
 
 ## Cause of Death by Race
 
 ```{r Cause of Death by Race}
 
+death_by_race <- police_killings |>
+  mutate(cause_of_death = case_when(cause == "Death in custody" ~ 0,
+                                    cause == "Gunshot" ~ 1,
+                                    cause == "Struck by vehicle" ~ 0,
+                                    cause == "Taser" ~ 0,
+                                    cause == "Unknown" ~ 0)) |>
+  group_by(raceethnicity) |> 
+  summarize(mean_cause_of_death = mean(cause_of_death)) |>
+  ggplot(aes(x = raceethnicity, y = mean_cause_of_death)) +
+  geom_col(fill = "lightsalmon2") +
+  labs(x = "Race/Ethnicity of Deceased",
+       y = "Percent of Deaths by Gunshot",
+       title = "Percent of Deaths by Gunshot, by Race, U.S. 2015",
+       caption = "Data: The Guardian / FiveThirtyEight") +
+  theme_minimal()
+death_by_race
+  
 ```
+
+Contrary to my hypothesis, Black Americans were not the racial/ethnic group with the highest death by gunshot rate. It appears that that metric pertains to the Hispanic/Latino group, followed by Unknown, followed by White. Nonetheless, there are possible confounders -- specifically whether the type of weapon carried by the deceased individual varied by race.
 
 ## Cause of Death by Whether Individual Was Armed
 
@@ -137,31 +156,57 @@ Next, how does cause of death vary by whether the individual was armed?
 
 ```{r Cause of Death by Weapon}
 
-```
-
-## Regression
-
-Police Killings by County Demographics
-
-Here, we sort police killings by whether they occurred in a majority-black tract. We now advance beyond an analysis of individual killings, focusing instead on a more systemic parameter.
-
-```{r Police Killings by County Demographics Plot}
-majorityblack <- police_killings |>
-  mutate(majority_black = if_else(share_black > 50, "Majority Black", "Not Majority Black")) |>
-  ggplot(aes(x = majority_black)) +
-  geom_bar(fill = "orange2") +
-  labs(x = "Tract Demographics",
-       y = "Number of Occurences",
-       title = "US Police Killings by Share of County Black Population, 2015",
+death_by_weapon <- police_killings |>
+  mutate(cause_of_death = case_when(cause == "Death in custody" ~ 0,
+                                    cause == "Gunshot" ~ 1,
+                                    cause == "Struck by vehicle" ~ 0,
+                                    cause == "Taser" ~ 0,
+                                    cause == "Unknown" ~ 0)) |>
+  group_by(armed) |> 
+  summarize(mean_cause_of_death = mean(cause_of_death)) |>
+  ggplot(aes(x = armed, y = mean_cause_of_death)) +
+  geom_col(fill = "seagreen") +
+  labs(x = "Whether/How Individual Was Armed",
+       y = "Percent of Deaths by Gunshot",
+       title = "Percent of Deaths by Gunshot, by Subject's Weapon, U.S. 2015",
        caption = "Data: The Guardian / FiveThirtyEight") +
   theme_minimal()
-majorityblack
+death_by_weapon
+
 ```
 
-While only 7% of Americans live in majority-Black tracts, nearly a quarter of police killings occurred in majority-Black tracts. Not only does the race of an individual track with the rate of police killings -- racial makeup of the area in which the killing occurs is clearly relevant.
+Perhaps surprisingly, individuals carrying firearms did not die by gunshot at higher rates than many of the other groups. Both the 'Disputed' and 'Non-lethal' firearm categories corresponded to 100% rate of death by gunshot. And even more surprisingly, it appears that police were more likely to shoot and kill individuals who were unarmed than individuals armed with a firearm. However, like the last plot, the relationship between race/ethnicity and the individual's weapon could confound these results. 
 
-Next, let's add a socioeconomic component. Again, a tract is classified as having a high poverty rate if at least 20% of the population lives below the poverty line (USDA ERS). Approximately 11-12% of tracts fit this classification (Census.gov). Let's see what happens when we observe the interaction of racial and socioeconomic demographics.
 
+
+```{r}
+raceandeducation <- police_killings |>
+  mutate(majority_black = if_else(share_black > 50, "Majority Black", "Not Majority Black"),
+         percentcollege2 = case_when(
+           college < 0.15 ~ "<15%",
+           college >= 0.15 & college < 0.3 ~ "15-30%",
+           college >= 0.3 & college < 0.45 ~ "30-45%",
+           college >= 0.45 & college < 0.6 ~ "45-60%",
+           college >= 0.6 & college < 0.75 ~ "60-70%",
+           college >= 0.75 ~ "75+%"),
+         interaction = interaction(majority_black, percentcollege2)) |>
+  drop_na(percentcollege2) |>
+  group_by(interaction) |>
+
+killings_by_state <- police_killings |>
+  group_by(state) |>
+  count() |>
+  ggplot(aes(x = interaction, y = n, fill = interaction)) +
+  geom_bar(stat = "identity") +
+   labs(x = "Interaction: Majority-Black Tract and % of Tract Attaining BA or Higher",
+       y = "Number of Occurences",
+       title = "US Police Killings by Race and Education, 2015",
+       caption = "Data: The Guardian / FiveThirtyEight")
+```
+
+
+
+## Regression
 
 
 
