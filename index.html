@@ -1559,11 +1559,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://yihui.org/knitr/'>knitr</a></span><span class='op'>)</span></span>
 <span><span class='va'>police_killings</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"C:/Users/rwolf/OneDrive/Desktop/police_killings.csv"</span><span class='op'>)</span></span>
-<span><span class='va'>police_killings_grouped</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
+<span><span class='va'>police_killings_initialdata</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cause</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/count.html'>count</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>`Cause of Death` <span class='op'>=</span> <span class='va'>cause</span>, `Incidences` <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span> </span>
-<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>police_killings_grouped</span><span class='op'>)</span></span></code></pre>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>police_killings_initialdata</span><span class='op'>)</span></span></code></pre>
 </div>
 <table>
 <thead>
@@ -1774,7 +1774,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>       caption <span class='op'>=</span> <span class='st'>"Data: The Guardian / FiveThirtyEight"</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>axis.text.x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>angle <span class='op'>=</span> <span class='fl'>45</span>, hjust <span class='op'>=</span> <span class='fl'>1</span>, vjust <span class='op'>=</span> <span class='fl'>1</span>, size <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>plot.margin <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grid/unit.html'>unit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='st'>"cm"</span><span class='op'>)</span>,</span>
-<span>        legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span></span></code></pre>
+<span>        legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span> </span></code></pre>
 </div>
 <img src="index_files/figure-html5/Interaction%20Plot-1.png" width="624" />
 <div class="sourceCode">
@@ -1796,12 +1796,232 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 11 Unknown.Non-lethal                                 1    
 12 White.Non-lethal                                   0.914</code></pre>
 </div>
-<p>It appears that Hispanic/Latino individuals, armed or not, experienced the highest rates of death by gunshot (aside from the Unknown race category, but that’s hard to interpret). We do see that Black individuals die by gunshot at higher rates when they’re not lethally armed than when they’re armed with a lethal firearm, which suggests some support for my hypothesis but cannot be interpreted as causal without a regression model.</p>
+<p>It appears that Hispanic/Latino individuals, armed or not, experienced the highest rates of death by gunshot (aside from the Unknown race category, but that’s hard to interpret).</p>
+<p>We do see that Black individuals die by gunshot at noticeably higher rates when they’re not lethally armed compared to when they’re armed with a lethal firearm. However, that is also the case (albeit to a lesser degree) for some of the other racial/ethnic groups, and it couldn’t be interpreted as causal without a regression model anyway.</p>
 <p>Talking of regression models…</p>
 <h3 id="regression">Regression</h3>
+<p>Note: I have intentionally set certain variables as baselines for this regression. My variables of choice are White for race/ethnicity, and unarmed for weapon. This should serve as a helpful reference point for our regression analysis.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>police_killings</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>cause_of_death <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span><span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Death in custody"</span> <span class='op'>~</span> <span class='fl'>0</span>,</span>
+<span>                                    <span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Gunshot"</span> <span class='op'>~</span> <span class='fl'>1</span>,</span>
+<span>                                    <span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Struck by vehicle"</span> <span class='op'>~</span> <span class='fl'>0</span>,</span>
+<span>                                    <span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Taser"</span> <span class='op'>~</span> <span class='fl'>0</span>,</span>
+<span>                                    <span class='va'>cause</span> <span class='op'>==</span> <span class='st'>"Unknown"</span> <span class='op'>~</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> </span>
+<span></span>
+<span><span class='va'>police_killings</span> <span class='op'>&lt;-</span> <span class='va'>police_killings</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>raceethnicity <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>raceethnicity</span><span class='op'>)</span>, armed <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>armed</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>police_killings</span><span class='op'>$</span><span class='va'>raceethnicity</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/relevel.html'>relevel</a></span><span class='op'>(</span><span class='va'>police_killings</span><span class='op'>$</span><span class='va'>raceethnicity</span>, ref <span class='op'>=</span> <span class='st'>"White"</span><span class='op'>)</span></span>
+<span><span class='va'>police_killings</span><span class='op'>$</span><span class='va'>armed</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/relevel.html'>relevel</a></span><span class='op'>(</span><span class='va'>police_killings</span><span class='op'>$</span><span class='va'>armed</span>, ref <span class='op'>=</span> <span class='st'>"No"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>myregression</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>cause_of_death</span> <span class='op'>~</span> <span class='va'>raceethnicity</span> <span class='op'>+</span> <span class='va'>armed</span>, data <span class='op'>=</span> <span class='va'>police_killings</span><span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://modelsummary.com/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>myregression</span>,</span>
+<span>                           statistic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"s.e. = {std.error}"</span>,</span>
+<span>                                         <span class='st'>"p = {p.value}"</span><span class='op'>)</span>,</span>
+<span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table style="width:74%;">
+<colgroup>
+<col style="width: 52%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><ol type="1">
+<li></li>
+</ol></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(Intercept)</td>
+<td>0.929</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>s.e. = 0.035</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>p = &lt;0.001</td>
+</tr>
+<tr class="even">
+<td>raceethnicityAsian/Pacific Islander</td>
+<td>-0.219</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>s.e. = 0.104</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>p = 0.036</td>
+</tr>
+<tr class="odd">
+<td>raceethnicityBlack</td>
+<td>-0.095</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>s.e. = 0.035</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>p = 0.007</td>
+</tr>
+<tr class="even">
+<td>raceethnicityHispanic/Latino</td>
+<td>0.045</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>s.e. = 0.045</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>p = 0.315</td>
+</tr>
+<tr class="odd">
+<td>raceethnicityNative American</td>
+<td>-0.410</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>s.e. = 0.162</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>p = 0.012</td>
+</tr>
+<tr class="even">
+<td>raceethnicityUnknown</td>
+<td>0.006</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>s.e. = 0.088</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>p = 0.944</td>
+</tr>
+<tr class="odd">
+<td>armedDisputed</td>
+<td>0.096</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>s.e. = 0.230</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>p = 0.675</td>
+</tr>
+<tr class="even">
+<td>armedFirearm</td>
+<td>-0.036</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>s.e. = 0.038</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>p = 0.346</td>
+</tr>
+<tr class="odd">
+<td>armedKnife</td>
+<td>-0.003</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>s.e. = 0.050</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>p = 0.945</td>
+</tr>
+<tr class="even">
+<td>armedNon-lethal firearm</td>
+<td>0.073</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>s.e. = 0.095</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>p = 0.442</td>
+</tr>
+<tr class="odd">
+<td>armedOther</td>
+<td>-0.024</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>s.e. = 0.071</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>p = 0.734</td>
+</tr>
+<tr class="even">
+<td>armedUnknown</td>
+<td>-0.207</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>s.e. = 0.126</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>p = 0.099</td>
+</tr>
+<tr class="odd">
+<td>armedVehicle</td>
+<td>0.012</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>s.e. = 0.082</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>p = 0.881</td>
+</tr>
+<tr class="even">
+<td>Num.Obs.</td>
+<td>467</td>
+</tr>
+<tr class="odd">
+<td>R2</td>
+<td>0.053</td>
+</tr>
+<tr class="even">
+<td>R2 Adj.</td>
+<td>0.028</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>There’s a lot to look at here, so let’s narrow it down: our main variables of interest are <code>raceethnicityBlack</code> and <code>armedFirearm</code>, although there are plenty of other interesting conclusions that we can draw from the other variables as well. Focusing on the two aforementioned variables of interest, we find the following:</p>
+<ul>
+<li><code>raceethnicityBlack</code>: coefficient = -0.095, p = 0.007.</li>
+</ul>
+<p>In plain English: compared to the baseline for White individuals in this dataset, Black individuals in this dataset died due to gunshots at a rate 9.5 percentage points lower (holding all other variables constant). Because the p value for this is 0.007, this would represent a statistically significant finding at all of the traditional alpha levels (0.1, 0.05, 0.01). While this p-value is low enough to consider the fact that this result may be causal, I would argue that we cannot argue for causality for a couple of reasons: first, there could be other confounders; we don’t have enough information about the profiles of the individuals in this dataset nor the police departments involved, and we didn’t take into account other factors like age and gender in this regression. Second, the sample size is simply too small. We analyzed the results from one specific year, involving less than 500 individuals, which isn’t a sample size large enough to be applied causally to real-world trends.</p>
+<ul>
+<li><code>armedFirearm</code>: coefficient = -0.036, p = 0.346.</li>
+</ul>
+<p>In plain English: compared to the baseline for unarmed individuals in this dataset, individuals in this dataset who were armed with a firearm died due to gunshots at a rate 3.6 percentage points lower (holding all other variables constant). Because the p value for this is 0.346, this would not represent a statistically significant finding at any of the traditional alpha levels. Because of this p-value, the null hypothesis (which would state that being armed is not associated with any difference in rates of death by gunshot) cannot be rejected, and we cannot interpret this result as causal.</p>
 <h3 id="additional-visualizations">Additional Visualizations</h3>
-<p>Finally, let’s add to this research with a couple of interesting visualizations.</p>
-<p>First, here’s a map of killings by state. Note that North Dakota, South Dakota, Rhode Island, and Vermont recorded 0 police killings in this dataset.</p>
+<p>Before we wrap up, let’s add to this research with an interesting visualization.</p>
+<p>Below, we have a map of police killings by state. Note that North Dakota, South Dakota, Rhode Island, and Vermont recorded 0 police killings in this dataset.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
@@ -1867,7 +2087,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p><img src="index_files/figure-html5/Mapping-1.png" width="624" /></p>
 </div>
+<p>Much of this is unsurprising: as the three most populous states in the US, California, Texas, and Florida had the highest total number of police killings in 2015 respectively. However, states like Arizona and Oklahoma, which are nowhere near the size of California, Texas, or Florida, had quite high totals – higher than more populous states like New York, Ohio, Michigan, and Pennsylvania.</p>
+<p>There could be plenty of reasons for this disparity, and it again goes to show that, while it’s an interesting insight into American policing, this data set is not expansive enough to be considered wholly representative of the real world.</p>
 <h1 id="conclusion">Conclusion</h1>
+<p>Conclusion section: 1 paragraph (i) summarizing results and assessing the extent to which you find support for your hypothesis; (ii) describing limitations of the analysis and threats to inference (missing data, confounding, etc), and stating how you could improve your analysis if you had more time/money. (2pts)</p>
 <h4 id="sources">Sources:</h4>
 <ol type="1">
 <li><p><a href="https://fivethirtyeight.com/features/where-police-have-killed-americans-in-2015/" class="uri">https://fivethirtyeight.com/features/where-police-have-killed-americans-in-2015/</a></p></li>
