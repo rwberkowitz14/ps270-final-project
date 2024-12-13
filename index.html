@@ -1770,9 +1770,11 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"identity"</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Interaction: Race/Ethnicity and Whether Individual Was Lethally Armed"</span>,</span>
 <span>       y <span class='op'>=</span> <span class='st'>"Percent of Deaths by Gunshot"</span>,</span>
-<span>       title <span class='op'>=</span> <span class='st'>"US Police Killings by Race and Education, 2015"</span>,</span>
+<span>       title <span class='op'>=</span> <span class='st'>"US Police Killings by Race and Weapon of Subject, 2015"</span>,</span>
 <span>       caption <span class='op'>=</span> <span class='st'>"Data: The Guardian / FiveThirtyEight"</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>axis.text.x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>angle <span class='op'>=</span> <span class='fl'>65</span>, hjust <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>axis.text.x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>angle <span class='op'>=</span> <span class='fl'>45</span>, hjust <span class='op'>=</span> <span class='fl'>1</span>, vjust <span class='op'>=</span> <span class='fl'>1</span>, size <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>plot.margin <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grid/unit.html'>unit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='st'>"cm"</span><span class='op'>)</span>,</span>
+<span>        legend.position <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span></span></code></pre>
 </div>
 <img src="index_files/figure-html5/Interaction%20Plot-1.png" width="624" />
 <div class="sourceCode">
@@ -1794,6 +1796,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 11 Unknown.Non-lethal                                 1    
 12 White.Non-lethal                                   0.914</code></pre>
 </div>
+<p>It appears that Hispanic/Latino individuals, armed or not, experienced the highest rates of death by gunshot (aside from the Unknown race category, but that’s hard to interpret). We do see that Black individuals die by gunshot at higher rates when they’re not lethally armed than when they’re armed with a lethal firearm, which suggests some support for my hypothesis but cannot be interpreted as causal without a regression model.</p>
+<p>Talking of regression models…</p>
 <h3 id="regression">Regression</h3>
 <h3 id="additional-visualizations">Additional Visualizations</h3>
 <p>Finally, let’s add to this research with a couple of interesting visualizations.</p>

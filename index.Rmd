@@ -216,14 +216,32 @@ raceandarmed |>
         legend.position = "none")
 
 raceandarmed
+
 ```
 
-It appears that Hispanic/Latino individuals, armed or not, experienced the highest rates of death by gunshot (aside from the Unknown race category, but that's hard to interpret). We do see that Black individuals die by gunshot at higher rates when they're not lethally armed than when they're armed with a lethal firearm, which suggests some support for my hypothesis but cannot be interpreted as causal without a regression model.
+It appears that Hispanic/Latino individuals, armed or not, experienced the highest rates of death by gunshot (aside from the Unknown race category, but that's hard to interpret). We do see that Black individuals die by gunshot at noticeably higher rates when they're not lethally armed compared to when they're armed with a lethal firearm. However, that is also the case (at smaller levels) for some of the other racial/ethnic groups, and couldn't be interpreted as causal without a regression model anyway.
 
 Talking of regression models...
 
 ### Regression
 
+```{r Regression}
+
+police_killings <- police_killings |>
+  mutate(cause_of_death = case_when(cause == "Death in custody" ~ 0,
+                                    cause == "Gunshot" ~ 1,
+                                    cause == "Struck by vehicle" ~ 0,
+                                    cause == "Taser" ~ 0,
+                                    cause == "Unknown" ~ 0)) 
+
+myregression <- lm(cause_of_death ~ raceethnicity + armed, data = police_killings)
+
+
+modelsummary::modelsummary(myregression,
+                           statistic = c("s.e. = {std.error}",
+                                         "p = {p.value}"),
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"))
+```
 
 
 ### Additional Visualizations
